@@ -6,4 +6,22 @@ pages:
 #- 'Build':
 #  - 'Build für Host': 'build_host.md'
 #  - 'Build fürs Target': 'build_target.md'
+theme: 'material'
+extra:
+    logo: 'images/sca-logo.svg'
+    palette:
+        primary: 'Grey'
+        accent: 'Red'
+    font:
+        text: 'Roboto'
+        code: 'Roboto Mono'
+    i18n:
+        prev: 'Previous'
+        next: 'Next'
 
+# Extensions
+markdown_extensions:
+    - codehilite(css_class=code)
+    - admonition
+    - toc:
+        permalink: '#'
