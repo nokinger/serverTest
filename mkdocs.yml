@@ -1,0 +1,9 @@
+site_name: SCA Buildsystem Documentation
+theme: 'readthedocs'
+pages:
+- 'Overview': 'index.md'
+#- 'Setup': 'setup.md'
+#- 'Build':
+#  - 'Build für Host': 'build_host.md'
+#  - 'Build fürs Target': 'build_target.md'
+

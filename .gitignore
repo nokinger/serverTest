@@ -1,0 +1,8 @@
+*.swp
+*.un~
+CMakeFiles
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+cmake.check_cache
+site
