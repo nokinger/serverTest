@@ -1,8 +1,11 @@
 site_name: SCA Buildsystem Documentation
-theme: 'readthedocs'
 pages:
 - 'Overview': 'index.md'
-#- 'Setup': 'setup.md'
+- 'Yocto Buildsystem': 'yocto.md'
+- 'Embedded Development Environment': 'dev_env.md'
+- 'Device Update Management': 'device_update.md'
+- 'Continious Delivery': 'cont_delivery.md'
+- 'Integration Testing': 'integration_testing.md'
 #- 'Build':
 #  - 'Build für Host': 'build_host.md'
 #  - 'Build fürs Target': 'build_target.md'
