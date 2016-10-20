@@ -9,3 +9,7 @@
         - Jenkins Delivery Pipeline
     - simples automatisches Deployment auf Testzelle
     - Archivierung der Build-Artefakte
+
+## Architecture
+
+![Continious Delivery Infrastructure](images/arch_cd.svg)
