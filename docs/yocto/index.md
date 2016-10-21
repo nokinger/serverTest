@@ -1,4 +1,4 @@
-# Yocto Buildsystem
+# Development Host
 
 **Migration von PTXdist nach Yocto:**
 
