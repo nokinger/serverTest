@@ -1,5 +1,6 @@
 ## Docker
-#### Prerquisites
+
+#### Prerequisites
 
 * Regardless of your Ubuntu version, Docker requires a 64-bit installation.
 * Your kernel must be 3.10 at minimum.
@@ -7,6 +8,7 @@
   ```
    $ uname -r                   <!--This displays the Kernel version-->
   ```
+
 #### Prerequisites for Ubuntu 16.04 and 14.04
 * For Ubuntu Trusty, and Xenial, it’s recommended to install the linux-image-extra-* kernel packages.
    The linux-image-extra-* packages allows you use the aufs storage driver.
@@ -21,7 +23,7 @@
   ```
 * Go ahead and install Docker.
 
-### Update your apt sources on Ubuntu 16.04 and Ubuntu 14.04
+### Update your apt sources on Ubuntu 16.04 or Ubuntu 14.04
 
 * Log into your machine as a user with sudo or root privileges.
 
@@ -97,6 +99,7 @@
    Cannot connect to the Docker daemon. Is 'docker daemon' running on this host?
 
 * Check that the DOCKER_HOST environment variable is not set for your shell. If it is, unset it.
+
 
 ## Shared Networkstorage
 A nfs-server emulator is needed for the os-developer. This emulator is realized as a docker container running on the server.
