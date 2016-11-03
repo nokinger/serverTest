@@ -2,6 +2,7 @@ site_name: SCA Buildsystem Documentation
 pages:
 - 'Overview': 'index.md'
 - 'Buildsystem Infrastructure': 'infrastructure/index.md'
+- 'Target-Hardware': 'hardware/index.md'
 - 'Yocto Buildsystem': 'yocto/index.md'
 - 'Embedded Development Environment': 'dev_env.md'
 - 'Device Update Management': 'device_update.md'
