@@ -12,7 +12,7 @@ pages:
 #- 'Build':
 #  - 'Build für Host': 'build_host.md'
 #  - 'Build fürs Target': 'build_target.md'
-##theme: 'material'
+# theme: 'material'
 theme: 'readthedocs'
 extra:
     logo: 'images/sca-logo.svg'
