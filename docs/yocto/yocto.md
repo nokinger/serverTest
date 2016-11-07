@@ -1,7 +1,7 @@
 
 ### Overview
 
-![overviewEnvironment](../images/yocto_Overview.png)
+![overviewEnvironment](./images/yocto_Overview.png)
 
 The Yocto Project is a Linux Foundation workgroup whose goal is to produce tools and processes that will enable the creation of Linux distributions for embedded software that are independent of the underlying architecture of the embedded software itself. The project was announced by the Linux Foundation in 2010. In March 2011, the project aligned itself with OpenEmbedded, an existing framework with similar goals, with the result being The OpenEmbedded-Core Project.
 
@@ -21,7 +21,7 @@ From a very high level, the build process starts out by setting up the shell env
 
 For example, one of the things it will look for is the existence of Pseudo, a fakeroot replacement contributed to the Yocto Project by Wind River Systems. At this point, bitbake core-image-minimal, for example, should be able to create a fully functional cross-compilation environment and then create a Linux image based on the image definition for core-image-minimal from source as defined in the Yocto Project's metadata layer.
 
-![overviewPokyTasksExec	](../images/poky_tasks.jpg)
+![overviewPokyTasksExec	](./images/yocto_pokyTasks.jpg)
 
 During the creation of our image, BitBake will parse its configuration, include any additional layers, classes, tasks or recipes defined, and begin by creating a weighted dependency chain. This process provides an ordered and weighted task priority map. BitBake then uses this map to determine what packages must be built in which order so as to most efficiently fulfill compilation dependencies. Tasks needed by the most other tasks are weighted higher, and thus run earlier during the build process. The task execution queue for our build is created. BitBake also stores the parsed metadata summaries and if, on subsequent runs, it determines that the metadata has changed, it can re-parse only what has changed.
 
@@ -57,7 +57,7 @@ BBLAYERS_NON_REMOVABLE ?= " \
 ```
 The meta layer, given by OpenEmbedded, is the base layer together with meta-yocto. On top of that the meta-yocto-bsp layer is used to add receipes and patch parts of the meta-yocto layer. For that reason *.bbappend files have been used. The meta-freescale layer is supported by freescale and is added to support freescale specific hardware. Other companys can be supported by substituting that layer by their layers. Finally modifications on the former layers are done by the meta-sca layer to suite the specific needs of SCA.
 
-![overviewLayerConcept](../images/Overview_layersystem.svg)
+![overviewLayerConcept](./images/yocto_OverviewLayersystem.svg)
 
 ### Further Documentation
 
