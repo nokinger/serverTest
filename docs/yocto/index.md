@@ -42,6 +42,13 @@ This guide minimally mentions the steps involved to get the system up and runnin
     sudo apt-get update && sudo apt-get install docker-engine
 ```
 
+
+* Add your user to a group named __docker__:
+
+```bash
+    sudo groupadd docker && sudo usermod -aG docker $USER
+```
+
 * Start Docker service:
 
 ```bash
@@ -57,16 +64,18 @@ This guide minimally mentions the steps involved to get the system up and runnin
 * To build the image from scratch locally, issue the following command in the project root:
 
 ```bash
-    tools/run_in_container.sh avantys tools/build/bitbake.sh build/avantys/ none core-image-minimal
+    tools/run_in_container.sh build tools/build/bitbake.sh build/AVANTYS/ none core-image-minimal
 ```
 
-* Alternatively, if you have access to Avantys yocto cache, that could be used:
+* Alternatively, if you have access to a remote yocto cache, that could be used:
 
 ```bash
-    tools/run_in_container.sh avantys tools/build/bitbake.sh build/avantys/ nas.pb.avantys.de:/nas/data/Projekte/SCA/yocto core-image-minimal
+    tools/run_in_container.sh build tools/build/bitbake.sh build/AVANTYS/ url:/path/to/yocto/cache core-image-minimal
 ```
 
+### Deploy SD-Card Image
 
+* The images can be found in`build/AVANTYS/tmp/deploy/images/ls1021atwr`.
 
 
 
