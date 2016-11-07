@@ -1,7 +1,3 @@
-This section covers the steps of getting a Yocto buildsystem up and running. The quick start guide documents the steps minimally for advanced users. The rest of the section looks into each step and explains the process and relevant options in detail.
-
-## Quick Start
-
 This guide minimally mentions the steps involved to get the system up and running.
 
 ### Install the Host Operating System
