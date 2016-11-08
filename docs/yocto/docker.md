@@ -82,7 +82,7 @@ If there is only one running container based on the image __build__ or the start
     docker exec -it <container id> <command>
 ```
 
-### Running the _bitbake_ Script
+### Performing _Yocto_ Operations
 
 One of the intended uses of the container is to build a Yocto distribution, which can be easily done by executing the script __bitbake.sh__. The script could be run from a bash console in the container with the following command:
 
