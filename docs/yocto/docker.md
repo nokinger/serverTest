@@ -69,3 +69,34 @@ To open a bash console in the container with this script, use the following comm
 ```bash
     tools/run_in_container.sh build /bin/bash
 ```
+
+This process will not show a container id. To find the container id, a list of running containers can be filtered by image name with the following command:
+
+```bash
+    docker ps --filter="ancestor=build"
+```
+
+If there is only one running container based on the image __build__ or the starting time of the container is approximately known, the container id can be easily determined. And then additional commands can be executed in the same container as follows:
+
+```bash
+    docker exec -it <container id> <command>
+```
+
+### Running the _bitbake_ Script
+
+One of the intended uses of the container is to build a Yocto distribution, which can be easily done by executing the script __bitbake.sh__. The script could be run from a bash console in the container with the following command:
+
+```bash
+    tools/build/bitbake.sh <config directory> <cache location> <arguments>
+```
+
+The __config directory__ is where the configuration files are stored and the built images will later be found. The __cache location__ is a network share location for __Yocto__ cache. If no cache is available, the value __none__ is given. The arguments are standard _bitbake_ arguments. The argument __core-image-minimal__ builds a minimal distribution.
+
+If a cache location is provided, the script tries to mount it as __NFS__ to the directory __/yocto-cache__. If mount fails, execution continues without the cache, locally building every package required by the distribution.
+
+The call to __bitbake.sh__ can be passed as the _command_ argument to __build_in_container.sh__ to automatise the entire process:
+
+```bash
+    tools/run_in_container.sh build tools/build/bitbake.sh <config directory> <cache location> core-image-minimal
+
+```
