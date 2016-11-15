@@ -7,6 +7,7 @@ pages:
     - 'QuickStart': 'yocto/quickstart.md'
     - 'Docker': 'yocto/docker.md'
     - 'Yocto': 'yocto/yocto.md'
+    - 'Systemd': 'yocto/systemd.md'
 - 'Embedded Development Environment': 'dev_env.md'
 - 'Device Update Management': 'device_update.md'
 - 'Continious Delivery': 'cont_delivery.md'
