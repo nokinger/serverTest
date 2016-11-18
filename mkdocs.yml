@@ -2,7 +2,9 @@ site_name: SCA Buildsystem Documentation
 pages:
 - 'Overview': 'index.md'
 - 'Buildsystem Infrastructure': 'infrastructure/index.md'
-- 'Target-Hardware': 'hardware/index.md'
+- 'Using the Target System':
+    - 'Mounting Development Host on Target': 'target_system/mount_on_target.md'
+    - 'Connecting the ECUcore-1021 Board to Development Host': 'target_system/connect_target_hardware.md'
 - 'Yocto Buildsystem':
     - 'QuickStart': 'yocto/quickstart.md'
     - 'Docker': 'yocto/docker.md'
