@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html dir="ltr" class="client-js" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/analytics.js" async=""></script><script src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/load_004.php" async=""></script>
+<meta charset="UTF-8">
+<title>High performance SD card tuning using the EXT4 file system - RidgeRun Developer Connection</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+<meta name="generator" content="MediaWiki 1.23.6">
+<link rel="shortcut icon" href="https://developer.ridgerun.com/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="https://developer.ridgerun.com/wiki/opensearch_desc.php" title="RidgeRun Developer Connection (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://developer.ridgerun.com/wiki/api.php?action=rsd">
+<link rel="alternate" type="application/atom+xml" title="RidgeRun Developer Connection Atom feed" href="https://developer.ridgerun.com/wiki/index.php?title=Special:RecentChanges&amp;feed=atom">
+<link rel="stylesheet" href="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/load_002.css">
+<style>
+.mw-collapsible-toggle{float:right;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none} caption .mw-collapsible-toggle{float:none} li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+/* cache key: ridgerun_developer_wiki:resourceloader:filter:minify-css:7:6c1d24e90626cec584f0869483f983e7 */
+.suggestions{overflow:hidden;position:absolute;top:0;left:0;width:0;border:none;z-index:1099;padding:0;margin:-1px -1px 0 0} html > body .suggestions{margin:-1px 0 0 0}.suggestions-special{position:relative;background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0;margin-top:-2px;display:none;padding:0.25em 0.25em;line-height:1.25em}.suggestions-results{background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0}.suggestions-result{color:black;margin:0;line-height:1.5em;padding:0.01em 0.25em;text-align:left; overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}.suggestions-result-current{background-color:#4C59A6;color:white}.suggestions-special .special-label{color:gray;text-align:left}.suggestions-special .special-query{color:black;font-style:italic;text-align:left}.suggestions-special .special-hover{background-color:silver}.suggestions-result-current .special-label,.suggestions-result-current .special-query{color:white}.highlight{font-weight:bold}
+/* cache key: ridgerun_developer_wiki:resourceloader:filter:minify-css:7:9f9511aa4ef920d34591113e825e6a1e */
+.postedit-container{margin:0 auto;position:fixed;top:0;height:0;left:50%;z-index:1000;font-size:13px}.postedit-container:hover{cursor:pointer}.postedit{position:relative;top:0.6em;left:-50%;padding:.6em 3.6em .6em 1.1em;line-height:1.5625em;color:#626465;background-color:#f4f4f4;border:1px solid #dcd9d9;text-shadow:0 0.0625em 0 rgba(255,255,255,0.5);border-radius:5px;-webkit-box-shadow:0 2px 5px 0 #ccc;box-shadow:0 2px 5px 0 #ccc;-webkit-transition:all 0.25s ease-in-out;-moz-transition:all 0.25s ease-in-out;-ms-transition:all 0.25s ease-in-out;-o-transition:all 0.25s ease-in-out;transition:all 0.25s ease-in-out}.skin-monobook .postedit{top:6em !important}.postedit-faded{opacity:0}.postedit-icon{padding-left:41px;  line-height:25px;background-repeat:no-repeat;background-position:8px 50%}.postedit-icon-checkmark{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABblBMVEUAAAD///////9PfTf///80aRdTgjn///9Feij///////////9Rfzf///////////9PfjZRgDh1o1xOfTb///////+bwYqLtnj///////9PfTa82K////9WhT6YxIL///9QgDdTgzr////////j7uDl7eLq8efi693k7OH///////9UhjuBr2rp9uRUhjr///9YljVKgir///9WiTlYjT3////9/v57vFlbkT5PjC9dlD/5/fhuq09stUTs9uhxuElctCpfnT1huDFloEZloUZmpENmvDZpvDxpvTxqvjxrvT5rvT9rwTxsqktswD5uwkBvuUdxw0NztFBztU9ztVBzwkp0tlJ1xkd2t1R3uVR4w1F4xk54x014yE15uVZ5v1R5xVB6v1R7yFJ8wVh9xVl9yFR9yVd9ylN+xVh+yFd/x1l/yFeAylmEx1+Ny2uY0Hqe04Wj1Ymv3Ze33qLD47TJ5L3O6cPU7Mrq9eb2+/Q4j37OAAAAQHRSTlMAAQIEBAUFBQwPFB4fJCUoKiosQEhJS01RUlZZXmdydXaChYuSlJSWmJmoq6uur8LExcvM19fg5ejt8fX2+Pr7SljgewAAAKpJREFUGBkFwQNCAwAAAMDLtl3LtrG4rWXbtvX77gAgZ6grFwC0bhwNVgKgdPZx8b0dgLi+s7Wn0VoAqpfOI9+BNADZI7fLrz2pSEwGHZuH+78lSK8ZLkLezF3ooyUG3VPXq2USei9WngeyoG195yBYWDF3E/2pAhl1e9Gr8bGT+bfOFCC2fnvh4X7rcqIAQNNu+HT6sxkAjceTL/2ZAIhv+PorBwBJxfkA//dFHSCBy/UTAAAAAElFTkSuQmCC);background-image:url(//developer.ridgerun.com/wiki/resources/src/mediawiki.action/images/green-checkmark.png?2014-10-29T17:56:40Z)!ie;background-position:left}.postedit-close{position:absolute;padding:0 .8em;right:0;top:0;font-size:1.25em;font-weight:bold;line-height:2.3em;color:black;text-shadow:0 0.0625em 0 white;text-decoration:none;opacity:0.2;filter:alpha(opacity=20)}.postedit-close:hover{color:black;text-decoration:none;opacity:0.4;filter:alpha(opacity=40)}
+/* cache key: ridgerun_developer_wiki:resourceloader:filter:minify-css:7:83a51ec7b90411fa1ef536b57eb1209b */</style><style>
+.suggestions a.mw-searchSuggest-link,.suggestions a.mw-searchSuggest-link:hover,.suggestions a.mw-searchSuggest-link:active,.suggestions a.mw-searchSuggest-link:focus{color:black;text-decoration:none}.suggestions-result-current a.mw-searchSuggest-link,.suggestions-result-current a.mw-searchSuggest-link:hover,.suggestions-result-current a.mw-searchSuggest-link:active,.suggestions-result-current a.mw-searchSuggest-link:focus{color:white}.suggestions a.mw-searchSuggest-link .special-query{ overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}
+/* cache key: ridgerun_developer_wiki:resourceloader:filter:minify-css:7:ae3fa4570b5ac0c6cf7b3776c8ae4d6f */</style><meta name="ResourceLoaderDynamicStyles" content="">
+<link rel="stylesheet" href="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/load.css">
+<style>a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}
+/* cache key: ridgerun_developer_wiki:resourceloader:filter:minify-css:7:ef96ae9dce023b6f44960b7fc7ccbe41 */</style>
+<script src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/load_005.php"></script><script src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/load_002.php"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"High_performance_SD_card_tuning_using_the_EXT4_file_system","wgTitle":"High performance SD card tuning using the EXT4 file system","wgCurRevisionId":8701,"wgRevisionId":8701,"wgArticleId":690,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Whitepaper","RidgeRunTechnology","System Design"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"High_performance_SD_card_tuning_using_the_EXT4_file_system","wgIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgWikiEditorEnabledModules":{"toolbar":true,"dialogs":true,"hidesig":true,"preview":false,"previewDialog":false,"publish":false}});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($,jQuery){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"editfont":"default","editondblclick":0,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":1,"extendwatchlist":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"imagesize":2,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nickname":"","norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"rcdays":7,"rclimit":50,"rows":25,"showhiddencats":0,"shownumberswatching":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":1,"watchdefault":1,"watchdeletion":0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,
+"useeditwarning":1,"prefershttps":1,"usebetatoolbar":1,"usebetatoolbar-cgd":1,"language":"en","variant-gan":"gan","variant-iu":"iu","variant-kk":"kk","variant-ku":"ku","variant-shi":"shi","variant-sr":"sr","variant-tg":"tg","variant-uz":"uz","variant-zh":"zh","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"searchNs274":false,"searchNs275":false,"variant":"en"});},{},{});mw.loader.implement("user.tokens",function($,jQuery){mw.user.tokens.set({"editToken":"+\\","patrolToken":false,"watchToken":false});},{},{});
+/* cache key: ridgerun_developer_wiki:resourceloader:filter:minify-js:7:f67fcefdccfed2d4dc5d91633f65e620 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax","skins.vector.js"]);
+}</script><script src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/load_003.php"></script>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/wiki/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-High_performance_SD_card_tuning_using_the_EXT4_file_system skin-vector action-view vector-animateLayout">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<h1 id="firstHeading" class="firstHeading" lang="en"><span dir="auto">High performance SD card tuning using the EXT4 file system</span></h1>
+						<div id="bodyContent">
+								<div id="siteSub">From RidgeRun Developer Connection</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-navigation">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" dir="ltr" class="mw-content-ltr" lang="en"><p>Write-intense
+ scenarios, like recording two 1080P video streams at 30 frames per 
+second simultaneously, place a significant load on the SD card. Without 
+proper tuning, most systems will not be able to write the data fast 
+enough to keep up with the incoming video stream.
+</p>
+<div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2><span class="toctoggle">&nbsp;[<a href="#" class="internal" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Solution"><span class="tocnumber">1</span> <span class="toctext">Solution</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Enable_EXT4_support_in_the_kernel"><span class="tocnumber">1.1</span> <span class="toctext">Enable EXT4 support in the kernel</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Prepare_your_SD_card_with_an_optimized_EXT4_filesystem"><span class="tocnumber">1.2</span> <span class="toctext">Prepare your SD card with an optimized EXT4 filesystem</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#Create_the_EXT4_partition"><span class="tocnumber">1.2.1</span> <span class="toctext">Create the EXT4 partition</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#Optimize_the_EXT4_partition"><span class="tocnumber">1.2.2</span> <span class="toctext">Optimize the EXT4 partition</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-6"><a href="#Mount_the_EXT4_partition_in_your_system"><span class="tocnumber">1.3</span> <span class="toctext">Mount the EXT4 partition in your system</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Optimizing_the_virtual_memory_subsystem"><span class="tocnumber">1.4</span> <span class="toctext">Optimizing the virtual memory subsystem</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Pre-erasing_SD_card"><span class="tocnumber">2</span> <span class="toctext">Pre-erasing SD card</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Common_problems"><span class="tocnumber">3</span> <span class="toctext">Common problems</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#Unable_to_mount_the_EXT4_filesystem"><span class="tocnumber">3.1</span> <span class="toctext">Unable to mount the EXT4 filesystem</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-11"><a href="#References"><span class="tocnumber">4</span> <span class="toctext">References</span></a></li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="Solution">Solution</span></h1>
+<p>The solution involves using an EXT4 file system for your high-speed 
+SD card, along with optimizing this filesystem parameters to tune for a 
+better write performance. Additionally, depending on your application 
+(or GStreamer pipeline, if using GStreamer), you may be required to tune
+ the kernel's virtual memory (<a rel="nofollow" class="external text" href="https://www.kernel.org/doc/Documentation/sysctl/vm.txt">vm</a>)
+ subsystem.  The goal is to average out the CPU load reducing spikes 
+caused by improper resource allocation.  A common issue is the <a rel="nofollow" class="external text" href="http://www.makelinux.net/books/lkd2/ch15lev1sec4">pdflush</a>
+ daemon waking up to flush the cached write data to the SD card, which 
+can cause a system stall, dropped frames, and worse if the CPU load 
+spike to significant.
+</p>
+<h2><span class="mw-headline" id="Enable_EXT4_support_in_the_kernel">Enable EXT4 support in the kernel</span></h2>
+<p>Kernel Configuration:
+</p>
+<pre>File Systems -&gt;
+  &lt;*&gt; The Extended 4 (ext4) filesystem
+    [*] Ext4 extended attributes
+    [*]  Ext4 POSIX Access Control Lists
+    [*]  Ext4 Security Labels
+Enable the block layer
+  [*] Support for large (2TB+) block devices and files
+</pre>
+<p>These are the resulting CONFIGs that should be set:
+</p>
+<pre>CONFIG_EXT4_FS=y
+CONFIG_EXT4_FS_XATTR=y
+CONFIG_EXT4_FS_POSIX_ACL=y
+CONFIG_EXT4_FS_SECURITY=y
+...
+CONFIG_LBDAF=y
+</pre>
+<h2><span class="mw-headline" id="Prepare_your_SD_card_with_an_optimized_EXT4_filesystem">Prepare your SD card with an optimized EXT4 filesystem</span></h2>
+<h3><span class="mw-headline" id="Create_the_EXT4_partition">Create the EXT4 partition</span></h3>
+<p>There are many tools to prepare an EXT4 partition in your SD card. We recommend <b>gparted</b>.
+</p>
+<pre>sudo gparted
+</pre>
+<p>See Figure 1 for an example setup of a new EXT4 partition in an 8 GB 
+SD card using gparted. In this example, the SD card was assigned the 
+device node <i>/dev/sdb</i>, and the new partition will be mapped to <i>/dev/sdb1</i>. This could be different in your computer.
+</p>
+<div class="thumb tright"><div class="thumbinner" style="width:402px;"><a href="https://developer.ridgerun.com/wiki/index.php?title=File:Gparted-ext4.png" class="image"><img alt="" src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/400px-Gparted-ext4.png" class="thumbimage" srcset="/wiki/images/thumb/8/8d/Gparted-ext4.png/600px-Gparted-ext4.png 1.5x, /wiki/images/8/8d/Gparted-ext4.png 2x" height="273" width="400"></a>  <div class="thumbcaption"><div class="magnify"><a href="https://developer.ridgerun.com/wiki/index.php?title=File:Gparted-ext4.png" class="internal" title="Enlarge"><img src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/magnify-clip.png" alt="" height="11" width="15"></a></div><b>Figure 1.</b> Creating an EXT4 partition with gparted</div></div></div>
+<h3><span class="mw-headline" id="Optimize_the_EXT4_partition">Optimize the EXT4 partition</span></h3>
+<p>The optimization consists on selecting the <i>data mode</i> for our fileystem as <b>data=writeback</b>.  The other two possible data modes (<b>data=ordered</b> and <b>data=journal</b>) do not have as good of bandwidth performance as <i>writeback</i>.  The EXT4 journaling is disabled when using <i>writeback</i>.  For details on the attributes of the various EXT4 data modes, read the <b>"Data Mode"</b> section from the <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/Documentation/filesystems/ext4.txt">Ext4 Filesystem</a> kernel documentation.
+</p>
+<pre>sudo umount /dev/sdb1
+sudo tune2fs -o journal_data_writeback /dev/sdb1
+sudo tune2fs -O ^has_journal /dev/sdb1
+sudo e2fsck -f /dev/sdb1
+</pre>
+<p>You can check your filesystem setup using:
+</p>
+<pre>sudo dumpe2fs /dev/sdb1 | less
+</pre>
+<h2><span class="mw-headline" id="Mount_the_EXT4_partition_in_your_system">Mount the EXT4 partition in your system</span></h2>
+<p>Mount the EXT4 partition specifying the following flags for optimization:
+</p>
+<ul>
+<li> noatime,nodiratime - avoid writing access times
+</li>
+<li> data=writeback - tell mount we are mounting a filesystem with no journaling
+</li>
+</ul>
+<p>To mount the EXT4 fileystem at /mnt/sd in your board:
+</p>
+<pre>mkdir -p /mnt/sd
+mount -t ext4 -O noatime,nodiratime,data=writeback /dev/mmcblk0p1 /mnt/sd
+</pre>
+<p>You can also specify these same flags in <i>/etc/fstab</i>.
+</p>
+<h2><span class="mw-headline" id="Optimizing_the_virtual_memory_subsystem">Optimizing the virtual memory subsystem</span></h2>
+<p>The <a rel="nofollow" class="external text" href="https://www.kernel.org/doc/Documentation/sysctl/vm.txt">kernel's virtual memory subsystem</a>
+ allows you to tune the writeout of dirty data to disk. In a 
+write-intense scenario like dual-recording 1080P@30, this tuning can be 
+fundamental to avoid crashing the system. Why? In just a fraction of a 
+second, the amount of input data captured is huge and we need to write 
+it eventually to disk; if the system waits too long to wake up it's 
+kernel's flusher threads, there will be too much data to write, and then
+ the write process would consume completely the CPU for even seconds.  
+Such a CPU spike will cause undesired behaviour (i.e. dropping frames 
+while recording), and eventually these CPU load peaks can stall the 
+system (as it will run out of avaiable memory). The default setup of the
+ vm subsystem is not optimal for high bandwidth file write use modes.
+</p><p>Below is the output of the Gstreamer gstperf element running the 
+dual-record pipeline without vm optimizations. The CPU load peaks to 
+100% when the kernel's flusher threads wake up.
+</p>
+<pre>perf0: frames: 1096 	current: 29.86	 average: 30.00	arm-load: 17
+perf1: frames: 1127 	current: 30.13	 average: 30.00	arm-load: 19
+perf0: frames: 1127 	current: 29.89	 average: 29.99	arm-load: 19
+perf1: frames: 1157 	current: 29.77	 average: 29.99	arm-load: 29
+perf0: frames: 1158 	current: 30.13	 average: 30.00	arm-load: 33
+perf1: frames: 1188 	current: 29.98	 average: 29.99	arm-load: 100     &lt;----- CPU Load peak
+perf0: frames: 1188 	current: 29.86	 average: 29.99	arm-load: 100
+perf1: frames: 1219 	current: 30.13	 average: 30.00	arm-load: 100
+perf0: frames: 1219 	current: 29.90	 average: 29.99	arm-load: 100
+perf1: frames: 1249 	current: 29.85	 average: 29.99	arm-load: 88
+perf0: frames: 1250 	current: 30.11	 average: 29.99	arm-load: 83
+perf1: frames: 1280 	current: 30.14	 average: 30.00	arm-load: 26
+perf0: frames: 1280 	current: 29.87	 average: 29.99	arm-load: 25
+perf1: frames: 1310 	current: 29.86	 average: 29.99	arm-load: 19
+perf0: frames: 1311 	current: 30.14	 average: 29.99	arm-load: 20
+</pre>
+<p>There are three parameters of the vm subsystem that are particularly useful for our problem:
+</p>
+<ul>
+<li> <b>dirty_writeback_centisecs</b> - the kernel flusher threads will periodically wake up and write 'old' data out to disk
+</li>
+<li> <b>dirty_expire_centisecs</b> - when dirty data is old enough to be eligible for writeout by the kernel flusher thread
+</li>
+<li> <b>dirty_ratio</b> - a percentage of total available memory that 
+contains free pages and reclaimable pages, the number of pages at which a
+ process which is generating disk writes will itself start writing out 
+dirty data
+</li>
+</ul>
+<p>Using RidgeRun's SDK for the <a href="https://developer.ridgerun.com/wiki/index.php?title=DM8168_Z3_RPS" title="DM8168 Z3 RPS">DM8168 Z3 board</a>, these are the default values for these parameters in the system:
+</p>
+<pre>/ # cat /proc/sys/vm/dirty_writeback_centisecs 
+500
+/ # cat /proc/sys/vm/dirty_expire_centisecs 
+3000
+/ # cat /proc/sys/vm/dirty_ratio 
+20
+</pre>
+<p><b>There is not a recipe to tweak these parameters, it all depends on your system and your application requirements.</b>
+ Since these parameters can affect all the processes, you may want to 
+prioritize one parameter or another. For the case presented in this wiki
+ page (dual-recording@30fps), the best tuning we came across was to 
+change dirty_writeback_centisecs and dirty_expire_centisecs both to the 
+100 value, meaning that every second the kernel's flusher threads will 
+wake up, and every second all the incoming data would expire and be 
+written by those threads. These frequent writes (every second) allowed 
+to avoid peaks on the CPU load.
+</p>
+<pre>echo 100 &gt; /proc/sys/vm/dirty_writeback_centisecs 
+echo 100 &gt; /proc/sys/vm/dirty_expire_centisecs
+</pre>
+<h1><span class="mw-headline" id="Pre-erasing_SD_card">Pre-erasing SD card</span></h1>
+<p>If you have an environment where you know you will start out with an 
+SD card that can be formatted, then you may want to first erase all the 
+NAND sectors in the SD card, followed by format.  In this way, when you 
+are writing files, you will not have to wait for the sector to first be 
+erased.  Simply formatting the SD card does not automatically erase all 
+the NAND sectors.
+</p><p>You can use the <b>erase</b> tool developed by Arnd Bergmann, which you can clone from <a rel="nofollow" class="external free" href="git://git.linaro.org/people/arnd/flashbench.git">git://git.linaro.org/people/arnd/flashbench.git</a>
+</p><p>I use pre-erasing when I am doing performance measurements and I want to have repeatable results.
+</p>
+<h1><span class="mw-headline" id="Common_problems">Common problems</span></h1>
+<h2><span class="mw-headline" id="Unable_to_mount_the_EXT4_filesystem">Unable to mount the EXT4 filesystem</span></h2>
+<p><b>Problem</b>
+</p><p>Unable to mount the EXT4 filesystem using the <i>mount</i> command.
+</p><p><b>Solution</b>
+</p><p>Likely your kernel wasn't built with EXT4 support.  To see what file systems are supported by your kernel, run:
+</p>
+<pre>cat /proc/filesystems
+</pre>
+<p>Follow the <a href="https://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system#Enable_EXT4_support_in_the_kernel" title="High performance SD card tuning using the EXT4 file system">Enable EXT4 support in the kernel</a> section above, and re-compile the kernel afterwards.
+</p>
+<h1><span class="mw-headline" id="References">References</span></h1>
+<ul>
+<li> <a rel="nofollow" class="external free" href="http://blogofterje.wordpress.com/2012/01/14/optimizing-fs-on-sd-card">http://blogofterje.wordpress.com/2012/01/14/optimizing-fs-on-sd-card</a>
+</li>
+<li> <a rel="nofollow" class="external free" href="https://www.kernel.org/doc/Documentation/filesystems/ext4.txt">https://www.kernel.org/doc/Documentation/filesystems/ext4.txt</a>
+</li>
+<li> <a rel="nofollow" class="external free" href="https://www.kernel.org/doc/Documentation/sysctl/vm.txt">https://www.kernel.org/doc/Documentation/sysctl/vm.txt</a>
+</li>
+<li> <a rel="nofollow" class="external free" href="https://lwn.net/Articles/293658">https://lwn.net/Articles/293658</a>
+</li>
+<li> <a rel="nofollow" class="external free" href="https://lwn.net/Articles/428584">https://lwn.net/Articles/428584</a>
+</li>
+<li> <a rel="nofollow" class="external free" href="http://www.westnet.com/%7Egsmith/content/linux-pdflush.htm">http://www.westnet.com/~gsmith/content/linux-pdflush.htm</a>
+</li>
+</ul>
+
+<!-- 
+NewPP limit report
+CPU time usage: 0.080 seconds
+Real time usage: 0.087 seconds
+Preprocessor visited node count: 70/1000000
+Preprocessor generated node count: 108/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/40
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key ridgerun_developer_wiki:pcache:idhash:690-0!*!0!!en!2!* and timestamp 20161121022836 and revision id 8701
+ -->
+</div>								<div class="printfooter">
+				Retrieved from "<a href="http://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system&amp;oldid=8701">http://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system&amp;oldid=8701</a>"				</div>
+												<div id="catlinks" class="catlinks"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="https://developer.ridgerun.com/wiki/index.php?title=Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="https://developer.ridgerun.com/wiki/index.php?title=Category:Whitepaper" title="Category:Whitepaper">Whitepaper</a></li><li><a href="https://developer.ridgerun.com/wiki/index.php?title=Category:RidgeRunTechnology" title="Category:RidgeRunTechnology">RidgeRunTechnology</a></li><li><a href="https://developer.ridgerun.com/wiki/index.php?title=Category:System_Design" title="Category:System Design">System Design</a></li></ul></div></div>												<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+			<div id="mw-head">
+				<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+	<h3 id="p-personal-label">Personal tools</h3>
+	<ul>
+<li id="pt-login"><a href="https://developer.ridgerun.com/wiki/index.php?title=Special:UserLogin&amp;returnto=High+performance+SD+card+tuning+using+the+EXT4+file+system" title="You are encouraged to log in; however, it is not mandatory [alt-shift-o]" accesskey="o">Log in</a></li>	</ul>
+</div>
+				<div id="left-navigation">
+					<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+	<h3 id="p-namespaces-label">Namespaces</h3>
+	<ul>
+					<li id="ca-nstab-main" class="selected"><span><a href="https://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system" title="View the content page [alt-shift-c]" accesskey="c">Page</a></span></li>
+					<li id="ca-talk" class="new"><span><a href="https://developer.ridgerun.com/wiki/index.php?title=Talk:High_performance_SD_card_tuning_using_the_EXT4_file_system&amp;action=edit&amp;redlink=1" title="Discussion about the content page [alt-shift-t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+	<h3 id="mw-vector-current-variant">
+		</h3>
+	<h3 tabindex="0" id="p-variants-label"><span>Variants</span><a tabindex="-1" href="#"></a></h3>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+				</div>
+				<div id="right-navigation">
+					<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+	<h3 id="p-views-label">Views</h3>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="https://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system">Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="https://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system&amp;action=edit" title="This page is protected.
+You can view its source [alt-shift-e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible"><span><a href="https://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system&amp;action=history" title="Past revisions of this page [alt-shift-h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+	<h3 tabindex="0" id="p-cactions-label"><span>Actions</span><a tabindex="-1" href="#"></a></h3>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+<div id="p-search" role="search">
+	<h3><label for="searchInput">Search</label></h3>
+	<form action="/wiki/index.php" id="searchform">
+					<div id="simpleSearch">
+					<input autocomplete="off" tabindex="1" name="search" placeholder="Search" title="Search RidgeRun Developer Connection [alt-shift-f]" accesskey="f" id="searchInput" type="search"><input value="Special:Search" name="title" type="hidden"><input name="go" value="Go" title="Go to a page with this exact name if exists" id="searchButton" class="searchButton" type="submit">		</div>
+	</form>
+</div>
+				</div>
+			</div>
+			<div class="collapsible-nav" id="mw-panel">
+					<div id="p-logo" role="banner"><a style="background-image: url(/wiki/skins/common/images/logorr.png);" href="https://developer.ridgerun.com/wiki/index.php?title=Main_Page" title="Visit the main page"></a></div>
+				<div class="portal first persistent" role="navigation" id="p-navigation" aria-labelledby="p-navigation-label">
+	<h3 id="p-navigation-label">Navigation</h3>
+	<div class="body">
+		<ul>
+			<li id="n-mainpage"><a href="https://developer.ridgerun.com/wiki/index.php?title=Main_Page" title="Visit the main page [alt-shift-z]" accesskey="z">Main Page</a></li>
+			<li id="n-Recent-changes"><a href="https://developer.ridgerun.com/wiki/index.php?title=Special:RecentChanges">Recent changes</a></li>
+		</ul>
+	</div>
+</div>
+<div class="portal expanded" role="navigation" id="p-Useful_Links" aria-labelledby="p-Useful_Links-label">
+	<h3 tabindex="2" id="p-Useful_Links-label"><a aria-expanded="true" aria-pressed="true" role="button" aria-controls="p-Useful_Links-list" aria-haspopup="true" href="#">Useful Links</a></h3>
+	<div style="display: block;" class="body">
+		<ul id="p-Useful_Links-list">
+			<li id="n-RidgeRun-Blog"><a href="http://www.ridgerun.com/#%21blog/y50sw" rel="nofollow">RidgeRun Blog</a></li>
+			<li id="n-Download-Center"><a href="http://www.ridgerun.com/#%21downloads/ggplf" rel="nofollow">Download Center</a></li>
+			<li id="n-iMX6-Community"><a href="https://community.freescale.com/community/imx" rel="nofollow">iMX6 Community</a></li>
+			<li id="n-TI-E2E-Community"><a href="http://e2e.ti.com/" rel="nofollow">TI E2E Community</a></li>
+		</ul>
+	</div>
+</div>
+<div class="portal collapsed" role="navigation" id="p-tb" aria-labelledby="p-tb-label">
+	<h3 tabindex="3" id="p-tb-label"><a aria-expanded="false" aria-pressed="false" role="button" aria-controls="p-tb-list" aria-haspopup="true" href="#">Tools</a></h3>
+	<div class="body">
+		<ul id="p-tb-list">
+			<li id="t-whatlinkshere"><a href="https://developer.ridgerun.com/wiki/index.php?title=Special:WhatLinksHere/High_performance_SD_card_tuning_using_the_EXT4_file_system" title="A list of all wiki pages that link here [alt-shift-j]" accesskey="j">What links here</a></li>
+			<li id="t-recentchangeslinked"><a href="https://developer.ridgerun.com/wiki/index.php?title=Special:RecentChangesLinked/High_performance_SD_card_tuning_using_the_EXT4_file_system" title="Recent changes in pages linked from this page [alt-shift-k]" accesskey="k">Related changes</a></li>
+			<li id="t-specialpages"><a href="https://developer.ridgerun.com/wiki/index.php?title=Special:SpecialPages" title="A list of all special pages [alt-shift-q]" accesskey="q">Special pages</a></li>
+			<li id="t-print"><a href="https://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system&amp;printable=yes" rel="alternate" title="Printable version of this page [alt-shift-p]" accesskey="p">Printable version</a></li>
+			<li id="t-permalink"><a href="https://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system&amp;oldid=8701" title="Permanent link to this revision of the page">Permanent link</a></li>
+			<li id="t-info"><a href="https://developer.ridgerun.com/wiki/index.php?title=High_performance_SD_card_tuning_using_the_EXT4_file_system&amp;action=info">Page information</a></li>
+		</ul>
+	</div>
+</div>
+			</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 9 March 2016, at 14:58.</li>
+											<li id="footer-info-viewcount">This page has been accessed 30,994 times.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="https://developer.ridgerun.com/wiki/index.php?title=RidgeRun_Developer_Connection:Privacy_policy" title="RidgeRun Developer Connection:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="https://developer.ridgerun.com/wiki/index.php?title=RidgeRun_Developer_Connection:About" title="RidgeRun Developer Connection:About">About RidgeRun Developer Connection</a></li>
+											<li id="footer-places-disclaimer"><a href="https://developer.ridgerun.com/wiki/index.php?title=RidgeRun_Developer_Connection:General_disclaimer" title="RidgeRun Developer Connection:General disclaimer">Disclaimers</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="https://www.mediawiki.org/"><img src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" height="31" width="88"></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>/*<![CDATA[*/window.jQuery && jQuery.ready();/*]]>*/</script><script>if(window.mw){
+mw.loader.state({"site":"loading","user":"ready","user.groups":"ready"});
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.action.view.postEdit","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","skins.vector.collapsibleNav"],null,true);
+}</script>
+<script src="High%20performance%20SD%20card%20tuning%20using%20the%20EXT4%20file%20system%20-%20RidgeRun%20Developer%20Connection-Dateien/load.php"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-2001544-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>if(window.mw){
+mw.config.set({"wgBackendResponseTime":347});
+}</script>
+	
+
+<div class="suggestions" style="display: none; font-size: 13px;"><div class="suggestions-results"></div><div class="suggestions-special"></div></div></body></html>
