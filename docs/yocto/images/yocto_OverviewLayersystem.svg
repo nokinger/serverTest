@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="297mm"
+   width="210mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Overview_layersystem.svg">
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     id="namedview6"
+     showgrid="true"
+     inkscape:zoom="1.2685914"
+     inkscape:cx="425.21864"
+     inkscape:cy="826.25862"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3195" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="g3469">
+    <text
+       sodipodi:linespacing="125%"
+       id="text3380"
+       y="28.420826"
+       x="373.35938"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'"
+         y="28.420826"
+         x="373.35938"
+         id="tspan3382"
+         sodipodi:role="line">Bitbake Layering</tspan></text>
+    <g
+       transform="translate(-20.619003,0)"
+       id="g3442">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:15px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="252.19952"
+         y="268.87048"
+         id="text3197"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3199"
+           x="252.19952"
+           y="268.87048">OE-core</tspan><tspan
+           sodipodi:role="line"
+           x="252.19952"
+           y="287.62048"
+           id="tspan3201">./meta</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:15px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="255.30119"
+         y="213.89323"
+         id="text3203"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3205"
+           x="255.30119"
+           y="213.89323">Yocto Layer</tspan><tspan
+           sodipodi:role="line"
+           x="257.6889"
+           y="232.64323"
+           id="tspan3207">./meta-yocto </tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:15px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="259.67566"
+         y="144.55116"
+         id="text3209"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3211"
+           x="259.67566"
+           y="144.55116">Board Enablement Layer</tspan><tspan
+           sodipodi:role="line"
+           x="259.67566"
+           y="163.30116"
+           id="tspan3213">./meta-freescale</tspan><tspan
+           sodipodi:role="line"
+           x="262.06335"
+           y="182.05116"
+           id="tspan3215">./meta-yocto-bsp </tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:15px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="262.11725"
+         y="92.727036"
+         id="text3217"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3219"
+           x="262.11725"
+           y="92.727036">Software / Configuration Layer</tspan><tspan
+           sodipodi:role="line"
+           x="262.11725"
+           y="111.47704"
+           id="tspan3221">meta-sca</tspan></text>
+      <rect
+         style="fill:#000000;fill-opacity:0.29411765;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect3327"
+         width="270"
+         height="40"
+         x="130"
+         y="254.36221" />
+      <rect
+         style="fill:#000000;fill-opacity:0.29411765;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect3327-3"
+         width="270"
+         height="40"
+         x="130"
+         y="198.36221" />
+      <rect
+         style="fill:none;fill-opacity:0.29411765;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect3327-6"
+         width="270"
+         height="40"
+         x="130"
+         y="76.362213" />
+      <rect
+         style="fill:none;fill-opacity:0.29411765;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect3327-6-7"
+         width="270"
+         height="60.495171"
+         x="130"
+         y="128.36221" />
+      <rect
+         style="fill:none;fill-opacity:0.29411765;stroke:#000000;stroke-width:1.99999988;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect3327-6-5"
+         width="553.7793"
+         height="264.65863"
+         x="116.61932"
+         y="54.016693" />
+      <rect
+         style="fill:none;fill-opacity:0.29411765;stroke:#000000;stroke-width:1.99999976;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect3327-6-5-3"
+         width="553.38513"
+         height="123.16312"
+         x="116.619"
+         y="194.27429" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="520"
+         y="122.36222"
+         id="text3380-5"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3382-6"
+           x="520"
+           y="122.36222"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif">Additional</tspan><tspan
+           sodipodi:role="line"
+           x="520"
+           y="147.36221"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan3417">Layers</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="520.00006"
+         y="240.36221"
+         id="text3380-5-2"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3382-6-9"
+           x="520.00006"
+           y="240.36221"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif">Default</tspan><tspan
+           sodipodi:role="line"
+           x="520.00006"
+           y="265.36221"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif"
+           id="tspan3417-1">Layers</tspan></text>
+    </g>
+  </g>
+</svg>
