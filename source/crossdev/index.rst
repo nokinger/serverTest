@@ -8,3 +8,6 @@
 
    devhost
    target
+   get_sources
+   configure
+   imports
