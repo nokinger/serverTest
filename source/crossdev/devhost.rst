@@ -11,10 +11,13 @@ Windows is currently not supported . The recomended distribution is Ubuntu >= 16
 Packagename         Purpose
 ================    =======
 build-essential     Basic development packages
+git                 Version-Control
 nodejs              Required for bower dependency manager
 npm                 Required to be able to install bower
 cmake               Buildmanagement
+wget                Download-Tool
 libgtest-dev        Unittesting
+coco-cpp            Used by the application-controller build
 ================    =======
 
 **Install bower dependency manager via npm:**
