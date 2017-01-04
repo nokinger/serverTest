@@ -247,8 +247,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.1772698"
-     inkscape:cx="526.25349"
-     inkscape:cy="539.14152"
+     inkscape:cx="526.1811"
+     inkscape:cy="372.04724"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -972,5 +972,19 @@
          y="403.31174"
          style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:15px;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light Italic'"
          id="tspan8123-2">build with every buildconfig in use.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="820.43683"
+       y="1032.9393"
+       id="text8095-7-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="820.43683"
+         y="1032.9393"
+         style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:10px;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light Italic';text-align:center;text-anchor:middle"
+         id="tspan8239-7"><tspan
+   style="font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium Italic'"
+   id="tspan8380">Author:</tspan> Alfred Schapansky, AVANTYS engineering GmbH &amp; Co. KG, V1.0.0, 04.01.2017</tspan></text>
   </g>
 </svg>
