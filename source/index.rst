@@ -10,6 +10,7 @@ Contents:
    infrastruct/index
    yocto/index
    crossdev/index
+   integration-tests/index
    common_tasks/index
    refmat/index
 
