@@ -7,7 +7,6 @@ Contents:
    :maxdepth: 2
    :numbered:
 
-   infrastruct/index
    yocto/index
    crossdev/index
    integration-tests/index

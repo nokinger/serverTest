@@ -6,4 +6,5 @@ The Yocto Buildsystem
    :maxdepth: 2
    :numbered:
 
-   overview/index
+   overview
+   building_images
