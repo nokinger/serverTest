@@ -4,14 +4,14 @@ SCA Embedded Linux Buildsystem
 Contents:
 
 .. toctree::
-   :maxdepth: 2
-   :numbered:
+    :maxdepth: 2
+    :numbered:
 
-   yocto/index
-   crossdev/index
-   integration-tests/index
-   common_tasks/index
-   refmat/index
+    target/index
+    yocto/index
+    crossdev/index
+    integration-tests/index
+    common_tasks/index
 
 Indices and tables
 ==================

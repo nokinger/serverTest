@@ -12,19 +12,11 @@ Packagename         Purpose
 ================    =======
 build-essential     Basic development packages
 git                 Version-Control
-nodejs              Required for bower dependency manager
-npm                 Required to be able to install bower
 cmake               Buildmanagement
 wget                Download-Tool
 libgtest-dev        Unittesting
 coco-cpp            Used by the application-controller build
 ================    =======
-
-**Install bower dependency manager via npm:**
-
-.. code-block:: console
-
-    $ npm install -g bower
 
 **Install google test-framework:**
 
@@ -38,9 +30,9 @@ coco-cpp            Used by the application-controller build
 **Install a yocto SDK:**
 
 Depending on the device-type you are developing for there will be different SDKs.
-Get the debian package of the required SDK from Mr. Windisch, copy it to your
-harddisk and install it:
+Get the debian package of the required SDK, copy it to your harddisk and install it
+(e.g. the ``enterprise-sdk`` for the ``app-carrier-board``:
 
 .. code-block:: sh
 
-    $ sudo dpkg -i PATH-TO-SDK.deb
+    $ sudo dpkg -i sca-enterprise-image-app-carrier-board_amd64_2.1.1-1.0.0.deb

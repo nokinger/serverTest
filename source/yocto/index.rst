@@ -8,3 +8,4 @@ The Yocto Buildsystem
 
    overview
    building_images
+   building_sdks

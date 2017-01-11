@@ -1,0 +1,8 @@
+{% extends "!layout.html" %}
+{% block extrahead %}
+    <script src="../_static/tty-player/webcomponents-lite.min.js"></script>
+    <link href="../_static/tty-player/tty-player.css" rel="stylesheet"></link>
+    <script src="../_static/tty-player/term.js"></script>
+    <script src="../_static/tty-player/tty-player.js"></script>
+    {{ super() }}
+{% endblock %}
