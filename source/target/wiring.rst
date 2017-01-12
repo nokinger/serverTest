@@ -1,7 +1,33 @@
+.. _target_wiring_connect:
+
 Connecting the application-carrier-board to your development system 
 ===================================================================
 
-.. image:: ECUCore.png
+To run and test applications on your target-device it must be accessible from your
+development host through ssh and in some cases a serial console would also be required.
+
+.. image:: images/board_conn.svg
+
+**Network Connections:**
+
+Make sure your target-board and development host are on the same network and can ping
+each other. As a default the target-board uses DHCP to get an IP address.
+
+To verify your connection try to login to the target-board via SSH from your host:
+
+.. code-block:: console
+
+    $ ssh root@TARGET-IP
+    
+.. note::
+
+    Currently there are only development-images in use which do not have a password set
+    for the root-user.
+
+**Serial Connections:**
+
+Use a USB-Serial-Converter on your development host to connecto to the target-board. Be
+aware, that you must use a nullmodem cable to connect the converter to the board.
 
 Install required software on your dev-host
 ==========================================
@@ -9,6 +35,11 @@ Install required software on your dev-host
 .. code-block:: console
 
     $ sudo apt-get install picocom
+
+Install an image
+================
+
+See :ref:`yocto_build_flash_sdcard`.
 
 Booting the board
 =================

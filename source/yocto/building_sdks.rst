@@ -30,16 +30,18 @@ To generate the ``enterprise-sdk`` for the ``application-carrier-board`` run:
 .. code-block:: console
 
     $ cd ~/projects/sca-os
-    $ ./tools/make_sca_[enterprise|sys6000|asc5000]_sdk.sh ./build/BUILDCONFIG
+    $ ./tools/build/make_sca_[enterprise|sys6000|asc5000]_sdk.sh ./build/BUILDCONFIG
 
 To generate a debian-package of the ``enterprise-sdk`` for the ``application-carrier-board`` run:
 
 .. code-block:: console
 
     $ cd ~/projects/sca-os
-    $ ./tools/make_sca_enterprise_sdk.sh ./build/app-carrier-board
+    $ ./tools/build/make_sca_enterprise_sdk.sh ./build/app-carrier-board
 
 * The generated Debian-Package can now be found in ``~/projects/sca-os/build/BUILDCONFIG/tmp/deploy/sdk``
+
+.. _yocto_building_sdks_install:
 
 Installing an SDK to a developer host
 =====================================
@@ -48,4 +50,4 @@ Installing an SDK to a developer host
 
 .. code-block:: console
 
-    $ dpkg -i sca-enterprise-image-cortexa7hf-neon-toolchain_amd64_2.1.1-1.0.0.deb
+    $ dpkg -i sca-enterprise-sdk-app-carrier-board_2.1.1-1.0.0_amd64.deb

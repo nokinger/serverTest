@@ -40,6 +40,8 @@ AVANTYS run this command:
 
 The images build will be placed in ``build/app-carrier-board/tmp/deploy/images/ls1021atwr``.
 
+.. _yocto_build_flash_sdcard:
+
 Flashing an image to an sd-card
 ===============================
 

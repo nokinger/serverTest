@@ -5,7 +5,8 @@ Setup your host for development
 To develop applications for the SCA embedded linux devices you need a recent linux system;
 Windows is currently not supported . The recomended distribution is Ubuntu >= 16.04.
 
-**Install these ubuntu-packages:**
+Required ubuntu-packages
+=============================
 
 ================    =======
 Packagename         Purpose
@@ -18,7 +19,11 @@ libgtest-dev        Unittesting
 coco-cpp            Used by the application-controller build
 ================    =======
 
-**Install google test-framework:**
+Google test-framework
+=====================
+
+The google-test framework must be compiled and installed on your host; the installed debian
+package only includes the sources:
 
 .. code-block:: console
 
@@ -27,12 +32,7 @@ coco-cpp            Used by the application-controller build
     $ sudo make
     $ sudo cp ./*.a /usr/lib
 
-**Install a yocto SDK:**
+Install a Yocto SDK
+===================
 
-Depending on the device-type you are developing for there will be different SDKs.
-Get the debian package of the required SDK, copy it to your harddisk and install it
-(e.g. the ``enterprise-sdk`` for the ``app-carrier-board``:
-
-.. code-block:: sh
-
-    $ sudo dpkg -i sca-enterprise-image-app-carrier-board_amd64_2.1.1-1.0.0.deb
+See :ref:`yocto_building_sdks_install`.
