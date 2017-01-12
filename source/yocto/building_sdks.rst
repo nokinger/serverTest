@@ -41,6 +41,11 @@ To generate a debian-package of the ``enterprise-sdk`` for the ``application-car
 
 * The generated Debian-Package can now be found in ``~/projects/sca-os/build/BUILDCONFIG/tmp/deploy/sdk``
 
+.. raw:: html
+
+    <tty-player controls poster=npt:28.5 cols=72 rows=30 src="../_static/yocto-build-sdk.ttyrec"></tty-player>
+
+
 .. _yocto_building_sdks_install:
 
 Installing an SDK to a developer host
