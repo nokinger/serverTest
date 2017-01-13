@@ -7,3 +7,4 @@ Integration Tests
    :numbered:
 
    overview
+   running_tests
