@@ -40,8 +40,37 @@ Setting up the Raspberry Pi
 
         $ curl -sSL get.docker.com | sh
 
-- Now the system is ready for manual integration testing. For a step-by-step guide, see :ref:`integration_tests_how_to_run`
 
+- Now the system is ready for manual integration testing.
+
+Best Practises for Running Tests Manually
+=========================================
+
+- Add your private keys to the *SSH Authentication Agent*:
+
+    .. code-block:: console
+
+        $ ssh-add ~/.ssh
+
+- Login to the Raspberry Pi with forwarding to *SSH Authentication Agent*:
+
+    .. code-block:: console
+
+        $ ssh -A root@hostname
+
+- Create a directory under ``/root`` named after your uniquely recognisable username:
+
+    .. code-block:: console
+
+        $ mkdir -p ~/<username>
+
+- Clone the necessary Git repository there:
+
+    .. code-block:: console
+
+        $ git clone <url> ~/<username>/<dirname>
+
+- For a step-by-step guide on how to run the tests, see :ref:`integration_tests_how_to_run`
 
 Adding the Raspberry Pi as a Jenkins Slave
 ==========================================
