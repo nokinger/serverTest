@@ -8,3 +8,4 @@ Integration Tests
 
    overview
    running_tests
+   app_carrier_test_rig/index
