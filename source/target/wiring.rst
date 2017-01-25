@@ -11,11 +11,13 @@ development host through ssh and in some cases a serial console would also be re
 
 .. image:: images/board_conn.svg
 
-**Power-Plug**
+Power-Plug
+----------
 
 .. image:: images/board_pwr.svg
 
-**Can-plug**
+Can-plug
+--------
 
 .. image:: images/board_CAN_interface.svg
 
@@ -23,15 +25,18 @@ development host through ssh and in some cases a serial console would also be re
 * L:    CAN-Low
 * G:    Ground
 
-**Ethernet**
+Ethernet
+--------
 
 .. image:: images/board_eth.svg
 
-**Sub-D**
+Sub-D
+-----
 
 .. image:: images/board_subds.svg
 
-**Network Connections:**
+Network Connections
+-------------------
 
 Make sure your target-board and development host are on the same network and can ping
 each other. As a default the target-board uses DHCP to get an IP address.
@@ -47,7 +52,8 @@ To verify your connection try to login to the target-board via SSH from your hos
     Currently there are only development-images in use which do not have a password set
     for the root-user.
 
-**Serial Connections:**
+Serial Connections
+------------------
 
 Use a USB-Serial-Converter on your development host to connecto to the target-board. Be
 aware, that you must use a nullmodem cable to connect the converter to the board.
