@@ -7,4 +7,5 @@
 
    devhost
    target
-   build 
+   build
+   rt_hints 
