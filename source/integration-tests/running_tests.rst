@@ -1,3 +1,5 @@
+.. _integration_tests_how_to_run:
+
 *****************************
 Running the Integration Tests
 *****************************

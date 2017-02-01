@@ -2,8 +2,9 @@
 
 ## Install required packages
 ```
-$ sudo pip install sphinx
-$ sudo pip install sphinx-rtd-theme
+$ sudo apt-get install python-pip
+$ pip install sphinx
+$ pip install sphinx-rtd-theme
 ```
 
 ## Generate the documentation
