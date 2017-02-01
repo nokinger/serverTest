@@ -2,18 +2,30 @@
 Hints on programming rt-applications
 ************************************
 
-Programming real-time applications on common OS adds some facets which must be taken care about. Even when a rt-patch is applied, as it is done in the linux-qoriq, running on the application-carrier-board. A main concern of rt-applications is fullfilling repetive jobs reliably in a certain period. To reach this several thins have to be done in a program.
+Programming real-time applications on common OS adds some facets which must
+be taken care about. A main concern of rt-applications is fullfilling repetive
+jobs reliably in a certain period and to accomplish this a few things have to
+be taken care about.
 
 
-Setting scheduler 
-=================
+Setting a scheduler 
+===================
 
-Each task has a scheduler configuration set. This can be set via the command ``sched_setscheduler``. As argmunets must be given a scheduling policy and the task priority. The highest priority is given by 99 and the lowest real time priority by 1. For certain reasons it is not recommended to use a priority higher than 90. Since there are 90 priority levels left, it is easy to take care about that recommandation. Realtime policies are FIFO and RoundRobin (RR).
+Each process/thread has a scheduler configuration set. This can be set via the function
+``sched_setscheduler`` providing a scheduling policy and a priority. The highest realtime
+priority is 99 and the lowest 1. For certain reasons it is not recommended to use a
+priority higher than 90. Realtime policies are FIFO and RoundRobin (RR).
 
-To demonstrate the effect of that command the program given below has been executed several times. As policies the default realtime policy has been taken and RR.
-Having the toolchain installed, you can :download:`latencyTest <../crossdev/downloads/src.tar.xz>` and try the program.
+To demonstrate the effect of that function the program given below has been executed several times.
+As policies the default policy (non-rt) has been used and RR.
 
-The program starts a thread in which a function is running for 10 seconds in a loop pausing periodically for 500 microseconds. It measures the time before pausing, after pausing and calculates the difference between the desired 500 microseconds sleep and the actual real sleep. In the end the minimal and the maximum latency is printed on the commandline.  
+* :download:`Latency-Test-Example <../crossdev/downloads/src.tar.xz>`
+
+The program starts a thread in which a function is running for 10 seconds in a loop
+pausing periodically for 500 microseconds. It measures the time before pausing, after
+pausing and calculates the difference between the desired 500 microseconds sleep and
+the actual real sleep. In the end the minimal and the maximum latency is printed on the
+commandline.  
 
 .. code-block:: cpp
 
@@ -89,12 +101,21 @@ RR             54
 Avoiding page-faults 
 ====================
 
-Another source of non-deterministic latencies are page-faults. Page-faults occur when the cpu needs data or instructions not loaded in the L1, the highest, cache. The picture below shows the internal structure of the core component of the application-carrier-board.
+Another source of non-deterministic latencies are page-faults. Page-faults occur when the cpu needs
+data or instructions not loaded in the L1, the highest, cache. The picture below shows the internal
+structure of the core component of the application-carrier-board.
 
 .. figure:: images/LS1021_Blockdiagram.png
 
-To avoid page faults each thread has to call early as possible the command ``mlockall(MCL_CURRENT|MCL_FUTURE)``. mlockall locks all the pages in a process' virtual memory address space, and/or any that are added to it in the future. This includes the pages of the code, data and stack segment, as well as shared libraries, user space kernel data, shared memory, and memory mapped files.
-Another aspect is that creating a new thread new memory will be allocated for a new stack and for the thread administration. These allocations will result in new page faults too. Therefore all threads need to be created at startup time, before RT show time. This can be done by allocating and touching the later needed process memory at program start. An example is given by the next code snippet.
+To avoid page faults each thread has to call as early as possible the command
+``mlockall(MCL_CURRENT|MCL_FUTURE)``. mlockall locks all memory-pages in a process'
+virtual memory address space, and/or any that are added to it in the future.
+This includes the pages of the code, data and stack segment, as well as shared libraries, user
+space kernel data, shared memory, and memory mapped files.
+Another aspect is that when creating a new thread new memory will be allocated for a new stack and 
+thread administration. These allocations will result in new page faults too. Therefore all threads need
+to be created at startup time, before RT show time. This can be done by allocating and touching the
+later needed process memory at program start. An example is given by the next code snippet.
 
 .. code-block:: cpp
 
@@ -122,22 +143,22 @@ Another aspect is that creating a new thread new memory will be allocated for a 
 
 A useful command for measuring the maximal used memory is ``getrusage``
 
-To test the use of mlock and prefault allocation the dowloadable program has been used. 
-Setup:
+To test the use of mlock and prefault allocation the dowloadable program has been used:
+
 * Scheduler: RR
 * Taskinterval: 500 us
 * Threads:  8
 * MLockAll: yes
 * Duration: 30 s
-* 4 each runs with/without mlockalland and prefault
-Latencies in us are shown in the table below.
+* 4 runs with and without mlockall and and prefault
 
+Latencies in us are shown in the table below.
 
 
 +---------------+----------------+----------------------------+
 |Thread         |   mlockall ON  |      mlockall OFF          |
 +======+========+===+===+===+====+===+=======+=======+========+
-|Run(No thread) | 0 | 1 | 2 | 3  | 0 | 1     |     2 | 3      |
+|Run            | 0 | 1 | 2 | 3  | 0 | 1     |     2 | 3      |
 +---------------+---+---+---+----+---+-------+-------+--------+    
 | Thread 1      |58 | 66| 52| 58 | 53|  65   |``742``| 79     |
 +---------------+---+---+---+----+---+-------+-------+--------+
@@ -148,14 +169,14 @@ Latencies in us are shown in the table below.
 | Thread 4      |60 | 54| 69|  54| 79|  79   | 54    |  89    |
 +---------------+---+---+---+----+---+-------+-------+--------+
 
-This few runs hints that it is very probable to catch high latencies if memory is not locked.
-
 
 Using cpu-affinity 
 ==================
 
-CPU affinity means that a thread is given a certain cpu on which it may run. Other cpus will not receive that thread by the scheduler. 
-A thread has by default no cpu-affinity. It can be set at any time, but best at the beginning, by using ``sched_setaffinity`` which might be used like
+CPU affinity means that a thread is given a certain cpu on which it may run. Other cpus will
+not receive that thread by the scheduler. A thread has by default no cpu-affinity. It can
+be set at any time, but best at the beginning, by using ``sched_setaffinity`` which
+might be used like this:
 
 .. code-block:: cpp
     
@@ -169,10 +190,11 @@ A thread has by default no cpu-affinity. It can be set at any time, but best at 
         exit(-1);
     }
 
-Setting affinity forces a thread on a cpu which avoid thread migration between cpus. The stack need'nt be moved to another cache. A disadvantage is that a heavy thread, compared to the others, can influence the performance badly, as the tasks cannot be scheduled to other cpus.
+Setting an affinity forces a thread to run on a specific cpu which avoids thread migration between cpus.
+The stack need'nt be moved to another cache. A disadvantage is that a heavy thread, compared to the others,
+can influence the performance badly, as the tasks cannot be scheduled to other cpus.
 
-Several tests have been done to explore the effect of affinity. 
-Base setup:
+Several tests have been done to explore the effect of cpu-affinity:
 
 * Scheduler: RR
 * Taskinterval: 500 us
@@ -188,12 +210,13 @@ Tests:
 3. cpu0/cpu1:   1/7
 4. cpu0/cpu1:   7/1
 
-The table shows the worst iterations of each setup. It can be seen that using no affinity shows the shortest delays and the values have the smallest spread. Using affinity leaded to larger jitter.
+The table below shows the worst latencies for each setup. Using no affinity shows the shortest latencies
+and values have the smallest spread. Using affinity leads to larger jitter.
 
 +---------------+----------------+
 |               |   Test         |
 +===============+===+===+===+====+
-|Thread         | 1 | 2 | 3 | 4  |
+| Test          | 1 | 2 | 3 | 4  |
 +---------------+---+---+---+----+
 | Thread 1      |110|122| 52|122 |
 +---------------+---+---+---+----+

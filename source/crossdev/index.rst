@@ -8,4 +8,4 @@
    devhost
    target
    build
-   hints 
+   rt_hints 
