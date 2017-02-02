@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.2. Building Images &mdash; SCA Buildsystem 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="SCA Buildsystem 1.0.0 documentation" href="../index.html"/>
+        <link rel="up" title="2. The Yocto Buildsystem" href="index.html"/>
+        <link rel="next" title="2.3. Building SDKs" href="building_sdks.html"/>
+        <link rel="prev" title="2.1. Yocto Overview" href="overview.html"/>
+    <script src="../_static/tty-player/webcomponents-lite.min.js"></script>
+    <link href="../_static/tty-player/tty-player.css" rel="stylesheet"></link>
+    <script src="../_static/tty-player/term.js"></script>
+    <script src="../_static/tty-player/tty-player.js"></script>
+     
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> SCA Buildsystem
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../target/index.html">1. Target System</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">2. The Yocto Buildsystem</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">2.1. Yocto Overview</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Building Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">2.2.1. Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-an-image">2.2.2. Building an image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flashing-an-image-to-an-sd-card">2.2.3. Flashing an image to an sd-card</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="building_sdks.html">2.3. Building SDKs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../crossdev/index.html">3. (Cross-) Application Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integration-tests/index.html">4. Integration Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common_tasks/index.html">5. Common Tasks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">SCA Buildsystem</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">2. The Yocto Buildsystem</a> &raquo;</li>
+      
+    <li>2.2. Building Images</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/yocto/building_images.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="building-images">
+<h1>2.2. Building Images<a class="headerlink" href="#building-images" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>2.2.1. Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../common_tasks/index.html#common-tasks-docker-install"><span class="std std-ref">Docker Installation</span></a></li>
+</ul>
+</div>
+<div class="section" id="building-an-image">
+<h2>2.2.2. Building an image<a class="headerlink" href="#building-an-image" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>It is assumed, that you have cloned the os-repository in <code class="docutils literal"><span class="pre">~/projects/sca-os</span></code></li>
+<li><code class="docutils literal"><span class="pre">CONTAINER</span></code> is the name of a folder in <code class="docutils literal"><span class="pre">./tools/container</span></code> and is used as a template
+to build a docker-container for building</li>
+<li><code class="docutils literal"><span class="pre">BUILDCONFIG</span></code> is the name of a folder in <code class="docutils literal"><span class="pre">./build</span></code> (e.g. app-carrier-board, sys6000-11-cpu)) that
+is used as the config-directory for bitbake to build.</li>
+<li><code class="docutils literal"><span class="pre">IMAGE</span></code> is the name of the image-recipe; currently <code class="docutils literal"><span class="pre">sca-enterprise-image</span></code>, <code class="docutils literal"><span class="pre">sca-sys6000-image</span></code>
+and <code class="docutils literal"><span class="pre">sca-asc5000-image</span></code> are available.</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<span class="gp">$</span> ./tools/run_in_container.sh CONTAINER ./tools/build/bitbake.sh ./build/BUILDCONFIG none IMAGE
+</pre></div>
+</div>
+<p>To build the <code class="docutils literal"><span class="pre">sca-enterprise-image</span></code> for the <code class="docutils literal"><span class="pre">application-carrier-board</span></code> run this command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<span class="gp">$</span> ./tools/run_in_container.sh build ./tools/build/bitbake.sh ./build/app-carrier-board none sca-enterprise-image
+</pre></div>
+</div>
+<p>To build the <code class="docutils literal"><span class="pre">sca-enterprise-image</span></code> for the <code class="docutils literal"><span class="pre">application-carrier-board</span></code> with a common cache on nfs at
+AVANTYS run this command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<span class="gp">$</span> ./tools/run_in_container.sh build ./tools/build/bitbake.sh ./build/app-carrier-board nas.pb.avantys.de:/mnt/nas/data/Projekte/SCA/yocto sca-enterprise-image
+</pre></div>
+</div>
+<p>The images build will be placed in <code class="docutils literal"><span class="pre">build/app-carrier-board/tmp/deploy/images/ls1021atwr</span></code>.</p>
+<tty-player controls poster=npt:28.5 cols=72 rows=30 src="../_static/yocto-build-image.ttyrec"></tty-player></div>
+<div class="section" id="flashing-an-image-to-an-sd-card">
+<span id="yocto-build-flash-sdcard"></span><h2>2.2.3. Flashing an image to an sd-card<a class="headerlink" href="#flashing-an-image-to-an-sd-card" title="Permalink to this headline">¶</a></h2>
+<p>To write the image built previously to an sd-card, use this command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dd <span class="k">if</span><span class="o">=</span>./build/app-carrier-board/tmp/deploy/images/ls1021atwr/sca-image-application-ls1021atwr.sca-sdimg <span class="nv">of</span><span class="o">=</span>/dev/MMCDEVICE <span class="nv">bs</span><span class="o">=</span>1M
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>MMCDEVICE</dt>
+<dd>The name of the mmc-device in <code class="docutils literal"><span class="pre">/dev</span></code>. You must use the full device
+not a partition on it. For buildin card-readers this is usually
+<code class="docutils literal"><span class="pre">/dev/mmcblk0</span></code> and for usb-readers something like <code class="docutils literal"><span class="pre">/dev/sdc</span></code>.</dd>
+</dl>
+<div class="admonition danger">
+<p class="first admonition-title">Danger</p>
+<p><strong>Doublecheck the device you are writing to!!</strong></p>
+<p class="last">When you use the wrong device you can make your system unbootable and even loose
+your data. To the right device run <code class="docutils literal"><span class="pre">tail</span> <span class="pre">-f</span> <span class="pre">/var/log/messages</span></code> and plug in
+your sd-card. The devicename used by the sd-card will now show up in the log.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="building_sdks.html" class="btn btn-neutral float-right" title="2.3. Building SDKs" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral" title="2.1. Yocto Overview" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, SCA Schuckert GmbH.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

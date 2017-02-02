@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4.3.2. Test Gateway &mdash; SCA Buildsystem 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="SCA Buildsystem 1.0.0 documentation" href="../../index.html"/>
+        <link rel="up" title="4.3. Application Carrier Board Test Rig" href="index.html"/>
+        <link rel="next" title="5. Common Tasks" href="../../common_tasks/index.html"/>
+        <link rel="prev" title="4.3.1. Test Hardware" href="test_hardware.html"/>
+    <script src="../_static/tty-player/webcomponents-lite.min.js"></script>
+    <link href="../_static/tty-player/tty-player.css" rel="stylesheet"></link>
+    <script src="../_static/tty-player/term.js"></script>
+    <script src="../_static/tty-player/tty-player.js"></script>
+     
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SCA Buildsystem
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../target/index.html">1. Target System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../yocto/index.html">2. The Yocto Buildsystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../crossdev/index.html">3. (Cross-) Application Development</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Integration Tests</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">4.1. Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running_tests.html">4.2. Running the Integration Tests</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4.3. Application Carrier Board Test Rig</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="test_hardware.html">4.3.1. Test Hardware</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.3.2. Test Gateway</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-raspberry-pi">4.3.2.1. Setting up the Raspberry Pi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#best-practises-for-running-tests-manually">4.3.2.2. Best Practises for Running Tests Manually</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adding-the-raspberry-pi-as-a-jenkins-slave">4.3.2.3. Adding the Raspberry Pi as a Jenkins Slave</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../common_tasks/index.html">5. Common Tasks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">SCA Buildsystem</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">4. Integration Tests</a> &raquo;</li>
+      
+          <li><a href="index.html">4.3. Application Carrier Board Test Rig</a> &raquo;</li>
+      
+    <li>4.3.2. Test Gateway</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/integration-tests/app_carrier_test_rig/test_gateway.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="test-gateway">
+<h1>4.3.2. Test Gateway<a class="headerlink" href="#test-gateway" title="Permalink to this headline">¶</a></h1>
+<p>The test gateway is a hardware setup that comprises a <strong>Raspberry Pi 3 model B</strong> and numerous physical connections to the application carrier board to be tested. For a detailed look into the hardware setup, see <a class="reference internal" href="test_hardware.html#itest-testrig-test-hardware"><span class="std std-ref">Test Hardware</span></a>. The following sections describe the minimal software setup inside the Raspberry Pi required to run tests manually or as a part of an automated pipeline through <em>Jenkins</em>.</p>
+<div class="section" id="setting-up-the-raspberry-pi">
+<h2>4.3.2.1. Setting up the Raspberry Pi<a class="headerlink" href="#setting-up-the-raspberry-pi" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Download the <a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian image</a>. If a desktop environment is not required, a <a class="reference external" href="https://sourceforge.net/projects/minibian/">Minibian image</a> might be more preferable.</p>
+</li>
+<li><p class="first">Copy the image to a microSD card:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dd <span class="k">if</span><span class="o">=</span>/path/to/image <span class="nv">of</span><span class="o">=</span>/device/name
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">For cards with large capacity, there will be unpartitioned space left on the card. Use a partitioning utility like <strong>parted</strong> to expand the root partition as necessary. This expansion is recommended for working with Docker images.</p>
+</li>
+<li><p class="first">Boot into the Raspberry Pi with the microSD card and an ethernet connection (along with other necessary peripherals like display unit and input device).</p>
+</li>
+<li><p class="first">Log in with the default credentials (username: <strong>root</strong>, password: <strong>raspberry</strong>) and change the password for security reasons.</p>
+</li>
+<li><p class="first"><em>Optional:</em> It is likely that the OS will not have the keyboard layout you prefer. Install <strong>console-data</strong> and choose the correct layout during installation to remedy that:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install console-data
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Install <strong>curl</strong>, which is a requirement for Docker installation:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install curl
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Install <strong>Docker</strong>.</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -sSL get.docker.com <span class="p">|</span> sh
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Now the system is ready for manual integration testing.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="best-practises-for-running-tests-manually">
+<h2>4.3.2.2. Best Practises for Running Tests Manually<a class="headerlink" href="#best-practises-for-running-tests-manually" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Add your private keys to the <em>SSH Authentication Agent</em>:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ssh-add ~/.ssh
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Login to the Raspberry Pi with forwarding to <em>SSH Authentication Agent</em>:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ssh -A root@hostname
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Create a directory under <code class="docutils literal"><span class="pre">/root</span></code> named after your uniquely recognisable username:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir -p ~/&lt;username&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Clone the necessary Git repository there:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone &lt;url&gt; ~/&lt;username&gt;/&lt;dirname&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">For a step-by-step guide on how to run the tests, see <a class="reference internal" href="../running_tests.html#integration-tests-how-to-run"><span class="std std-ref">Running the Integration Tests</span></a></p>
+</li>
+</ul>
+</div>
+<div class="section" id="adding-the-raspberry-pi-as-a-jenkins-slave">
+<h2>4.3.2.3. Adding the Raspberry Pi as a Jenkins Slave<a class="headerlink" href="#adding-the-raspberry-pi-as-a-jenkins-slave" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Add a user named <strong>jenkins</strong> with its own home directory:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> useradd jenkins
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Add the public key of an RSA key-pair known to Jenkins to <code class="docutils literal"><span class="pre">/home/jenkins/.ssh/authorized_keys</span></code></p>
+</li>
+<li><p class="first">Install JDK. Depending on your choice of distribution, this might not be necessary. If it is:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install oracle-java8-jdk
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Add the Raspberry Pi as a Jenkins <cite>Permanent Agent</cite> using the <a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/SSH+Slaves+plugin">SSH Slaves plugin</a>.</p>
+</li>
+<li><p class="first">Now the system can be used to run integration tests as a Jenkins job.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../common_tasks/index.html" class="btn btn-neutral float-right" title="5. Common Tasks" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="test_hardware.html" class="btn btn-neutral" title="4.3.1. Test Hardware" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, SCA Schuckert GmbH.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
