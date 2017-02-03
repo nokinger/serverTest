@@ -122,7 +122,7 @@ Setting Up a Jenkins Pipeline for the Slave
 
 - In the *Build Triggers* options, set a *Poll SCM* schedule, e.g., ``H/5****``.
 
-- Add a build script. A working example has been provided below:
+- Add a build script. It must be ensured that ``docker exec`` commands are NOT run from this script with ``--interactive`` argument. A working example has been provided below:
 
     .. code-block:: groovy
 
