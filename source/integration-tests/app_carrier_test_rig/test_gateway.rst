@@ -98,6 +98,12 @@ Setting Up a Jenkins Pipeline for the Slave
 
 - Ensure that the ``sca-test-host`` has all peripheral devices attached as necessary.
 
+- Add the user ``jenkins`` to the group ``docker``:
+
+    .. code-block:: console
+
+        $ usermod -a -G docker jenkins
+
 - Install ``sudo`` on the test host if it is not present already:
 
     .. code-block:: console
