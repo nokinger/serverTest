@@ -33,11 +33,60 @@ Setting up the Raspberry Pi
 
         $ apt-get install curl
 
-- Install **Docker**.
+- Install **Docker**:
 
     .. code-block:: console
 
         $ curl -sSL get.docker.com | sh
+
+
+- Install **UncomplicatedFirewall** for logging on to the test target by using port forwarding:
+
+    .. code-block:: console
+
+        $ apt-get install ufw
+
+
+- In ``/etc/default/ufw``, change the value of ``DEFAULT_INPUT_POLICY`` and ``DEFAULT_FORWARD_POLICY`` to ``"ACCEPT"``.
+
+- In ``/etc/ufw/sysctl.conf``, set the value of ``net/ipv4/ip_forward`` to 1 (uncomment line if necessary).
+
+- Add the following line at the bottom of ``/root/.bashrc`` and re-login to the Raspberry Pi:
+
+    .. code-block:: console
+
+        echo 1 | sudo tee /proc/sys/net/ipv4/conf/eth0/route_localnet &>/dev/null
+
+
+- Add the following lines at the bottom of ``etc/ufw/before.rules`` (ensure COMMIT was called immediately before these lines):
+
+    .. code-block:: console
+
+        *nat
+        :PREROUTING ACCEPT [0:0]
+        :POSTROUTING ACCEPT [0:0]
+
+        -A PREROUTING -p tcp --dport 9022 -j DNAT --to-destination <target_ip>:22
+        -I POSTROUTING -p tcp -d <target_ip> --dport 22 -j MASQUERADE
+        -A OUTPUT -p tcp --dport 9022 -j DNAT -o lo --to-destination <target_ip>:22
+
+        COMMIT
+
+- Restart **UncomplicatedFirewall**:
+
+    .. code-block:: console
+
+        $ ufw disable
+        $ ufw enable
+
+- Now it should be possible to log in to the test target without knowing the test target's IP address:
+
+    .. code-block:: console
+
+        # From the Raspberry Pi
+        $ ssh root@localhost -p 9022
+        # From another node in the network
+        $ ssh root@<raspberry_pi_ip> -p 9022
 
 - Now the system is ready for manual integration testing.
 
@@ -114,7 +163,7 @@ Setting Up a Jenkins Pipeline for the Slave
 
     .. code-block:: console
 
-        $ apt-get install pv
+        $ apt-get install pv lsof
 
 - After the package ``sudo`` has been installed, the file ``/etc/sudoers`` will be available. Add permissions for the jenkins user to run certain commands as necessary for the pipeline script:
 
@@ -132,11 +181,11 @@ Setting Up a Jenkins Pipeline for the Slave
 
     .. code-block:: groovy
 
-        // This script requires the Jenkins node 'sca-test-host' to have the utility 'pv'
+        // This script requires the Jenkins node 'sca-test-host' to have the console utility 'pipe view'
         // It can be installed with the following command:
         //     apt-get install pv
 
-        BUILD_CONFIG = "app-carrier-board"
+        BUILD_CONFIG = "app-carrier-board-kernel4.1"
         BUILD_TARGET = "sca-enterprise-image"
         TARGET_HW = "ls1021atwr"
         REMOTE_YOCTO_CACHE = "nas.pb.avantys.de:/mnt/nas/data/Projekte/SCA/yocto"  // set to "none" if no cache available
@@ -144,7 +193,7 @@ Setting Up a Jenkins Pipeline for the Slave
 
         stage('Image Build') {
             node('docker'){
-                checkout([$class: 'GitSCM', branches: [[name: 'develop']], doGenerateSubmoduleConfigurations: false, userRemoteConfigs: [[credentialsId: '8d553a3a-6a07-4c8d-89c4-ac74d7878434', url: 'ssh://git@phabricator.pb.avantys.de/diffusion/86/sca-os.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'jenkinstest']], doGenerateSubmoduleConfigurations: false, userRemoteConfigs: [[credentialsId: '8d553a3a-6a07-4c8d-89c4-ac74d7878434', url: 'ssh://git@phabricator.pb.avantys.de/diffusion/86/sca-os.git']]])
                 sh "tools/run_in_container.sh build tools/build/bitbake.sh ./build/${BUILD_CONFIG} ${REMOTE_YOCTO_CACHE} ${BUILD_TARGET}"
                 fileExists "${JOB_NAME}/build/${BUILD_CONFIG}/tmp/deploy/images/${TARGET_HW}/${BUILD_TARGET}-${TARGET_HW}.sca-sdimg"
                 dir("build/${BUILD_CONFIG}/tmp/deploy/images/${TARGET_HW}") {
@@ -164,7 +213,20 @@ Setting Up a Jenkins Pipeline for the Slave
             }
         }
 
-        // Stages for reversing GPIO and running integration tests are yet to come
+        stage('Manual Approval') {
+            timeout(time:5, unit:'HOURS') {
+                input message: 'Please boot the test target with the newly written microSD card', ok: 'Ready'
+            }
+        }
+
+        stage('Integration Test') {
+            node('sca-test-host'){
+                checkout([$class: 'GitSCM', branches: [[name: 'jenkinstest']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'itests'], [$class: 'BuildChooserSetting', buildChooser: [$class: 'DefaultBuildChooser']]], userRemoteConfigs: [[credentialsId: 'ada433f1-3c4a-4ec9-a8b2-68ad746e01fa', url: 'ssh://git@phabricator.pb.avantys.de/diffusion/92/sca-integration-tests.git']]])
+                dir("itests") {
+                    sh "testrunner/run_in_container.sh"
+                }
+            }
+        }
 
         stage('Deliver') {
             node('docker') {
