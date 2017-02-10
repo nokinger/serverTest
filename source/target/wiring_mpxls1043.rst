@@ -1,4 +1,5 @@
-.. _target_wiring_connect:
+.. _target_wiring_sbc_eval:
+
 *********
 MXPLS1043
 *********
