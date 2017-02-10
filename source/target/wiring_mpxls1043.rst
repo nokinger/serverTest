@@ -20,6 +20,9 @@ development host through ssh or serial console (COM1). The peripheral interfaces
 
 .. image:: images/MXPLS1043_eth.jpg
 
+.. note::
+
+    Port2 is not available on this board
 
 **Network Connections:**
 
