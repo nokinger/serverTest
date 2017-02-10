@@ -262,7 +262,7 @@ Setting Up a Jenkins Pipeline for the Slave
 
         stage('Image Build') {
             node('docker'){
-                checkout([$class: 'GitSCM', branches: [[name: 'jenkinstest']], doGenerateSubmoduleConfigurations: false, userRemoteConfigs: [[credentialsId: '8d553a3a-6a07-4c8d-89c4-ac74d7878434', url: 'ssh://git@phabricator.pb.avantys.de/diffusion/86/sca-os.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'develop']], doGenerateSubmoduleConfigurations: false, userRemoteConfigs: [[credentialsId: '8d553a3a-6a07-4c8d-89c4-ac74d7878434', url: 'ssh://git@phabricator.pb.avantys.de/diffusion/86/sca-os.git']]])
                 sh "tools/run_in_container.sh build tools/build/bitbake.sh ./build/${BUILD_CONFIG} ${REMOTE_YOCTO_CACHE} ${BUILD_TARGET}"
                 fileExists "${JOB_NAME}/build/${BUILD_CONFIG}/tmp/deploy/images/${TARGET_HW}/${BUILD_TARGET}-${TARGET_HW}.sca-sdimg"
                 dir("build/${BUILD_CONFIG}/tmp/deploy/images/${TARGET_HW}") {
@@ -290,7 +290,7 @@ Setting Up a Jenkins Pipeline for the Slave
 
         stage('Integration Test') {
             node('sca-test-host'){
-                checkout([$class: 'GitSCM', branches: [[name: 'jenkinstest']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'itests'], [$class: 'BuildChooserSetting', buildChooser: [$class: 'DefaultBuildChooser']]], userRemoteConfigs: [[credentialsId: 'ada433f1-3c4a-4ec9-a8b2-68ad746e01fa', url: 'ssh://git@phabricator.pb.avantys.de/diffusion/92/sca-integration-tests.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'itests'], [$class: 'BuildChooserSetting', buildChooser: [$class: 'DefaultBuildChooser']]], userRemoteConfigs: [[credentialsId: 'ada433f1-3c4a-4ec9-a8b2-68ad746e01fa', url: 'ssh://git@phabricator.pb.avantys.de/diffusion/92/sca-integration-tests.git']]])
                 dir("itests") {
                     sh "testrunner/run_in_container.sh"
                 }
