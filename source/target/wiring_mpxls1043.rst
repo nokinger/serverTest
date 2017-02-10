@@ -58,14 +58,37 @@ See :ref:`yocto_build_flash_sdcard`.
 Booting the board (First Version)
 =================================
 
-After connecting the board run ``picocom`` and power on the board. Since no automatic booting is supported for first evaluation steps of the board, you have to boot it manually by using the following commands
+After connecting the board run ``picocom`` and power on the board. Since no automatic booting is supported for first evaluation steps of the board, you have to set the boot environment variables like this. It needs to be done only once per device.
 
 .. code-block:: console
 
-   setenv dtbfile devicetree-Image-mpxls1043.dtb
-   setenv bootargs.sd root=/dev/mmcblk0p2 rootfstype=ext4 rootflags=data=journal rw console=ttyS0,115200 rootwait
-   ext2load mmc 0:2 0x81000000 /boot/${dtbfile} && ext2load mmc 0:2 0x82000000 /boot/uImage && set bootargs ${bootargs.sd} && bootm 0x82000000 - 0x81000000
+    setenv dtbfile devicetree-Image-mpxls1043.dtb
+    setenv bootargs.sd root=/dev/mmcblk0p2 rootfstype=ext4 rootflags=data=journal rw console=ttyS0,115200 rootwait
+    setenv sdbootPre1 ext2load mmc 0:2 0x81000000 /boot/${dtbfile} 
+    setenv sdbootPre2 ext2load mmc 0:2 0x82000000 /boot/uImage  
+    setenv sdbootPre3 set bootargs ${bootargs.sd}
+    setenv sdboot bootm 0x82000000 - 0x81000000
+    setenv bootcmd run sdbootPre sdboot
+    saveenv
 
+If everything worked fine something like 
+
+.. code-block:: console
+
+    Saving Environment to NAND...
+    Erasing NAND...
+    Erasing at 0x100000 -- 100% complete.
+    Writing to NAND... OK
+
+Should be written on the console. As last command execute ``reset``.
+
+By default the bootdelay between bootloader and kernel is set to 5s. To set another, shorter bootdelay, execute the commands
+
+.. code-block:: console
+
+    setenv bootdelay 2
+    saveenv
+    
 References
 ==========
 
