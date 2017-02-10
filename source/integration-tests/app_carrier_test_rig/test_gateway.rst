@@ -7,7 +7,10 @@ The test gateway is a hardware setup that comprises a **Raspberry Pi 3 model B**
 Setting up the Raspberry Pi
 ===========================
 
-- Download the `Raspbian image <https://www.raspberrypi.org/downloads/raspbian/>`_. If a desktop environment is not required, a `Minibian image <https://sourceforge.net/projects/minibian/>`_ might be more preferable.
+Creating an OS Image:
+_____________________
+
+- Download the `Raspbian image <https://www.raspberrypi.org/downloads/raspbian/>`_. If a graphical desktop environment is not required, a `Minibian image <https://sourceforge.net/projects/minibian/>`_ might be preferable.
 
 - Copy the image to a microSD card:
 
@@ -15,17 +18,28 @@ Setting up the Raspberry Pi
 
         $ sudo dd if=/path/to/image of=/device/name bs=100M
 
-- For cards with large capacity, there will be unpartitioned space left on the card. Use a partitioning utility like **parted** to expand the root partition as necessary. This expansion is recommended for working with Docker images.
+- Boot into the Raspberry Pi with the microSD card and an ethernet connection (along with other necessary peripherals like display unit and input device(s)).
 
-- Boot into the Raspberry Pi with the microSD card and an ethernet connection (along with other necessary peripherals like display unit and input device).
+- If you chose *Minibian*, there are some minor differences to note from *Raspbian*:
 
-- Log in with the default credentials (username: **root** or **pi**, password: **raspberry**) and change the password for security reasons.
+    * *Minibian* installation does not automatically expand partitions. It can be done by installing and running ``raspi-config``:
 
-- *Optional:* It is likely that the OS will not have the keyboard layout you prefer. If there is no graphical interface to choose keyboard layout, install **console-data** and choose the correct layout during installation:
+        .. code-block:: console
 
-    .. code-block:: console
+            $ apt-get install raspi-config
 
-        $ apt-get install console-data
+    * *Minibian* by default only has user *root*
+
+    * There is no utility pre-installed to change keyboard layout. To set the keyboard layout of your choice, install **console-data** and choose the correct layout during installation:
+
+        .. code-block:: console
+
+            $ apt-get install console-data
+
+- Log in with the default credentials (username: **root** (*Minibian*) or **pi** (*Raspbian*), password: **raspberry**) and change the password for security reasons.
+
+Installing Required Software:
+_____________________________
 
 - Install **curl**, which is a requirement for Docker installation:
 
@@ -39,6 +53,11 @@ Setting up the Raspberry Pi
 
         $ curl -sSL get.docker.com | sh
 
+- Install **dnsmasq** for running a private network:
+
+    .. code-block:: console
+
+        $ apt-get install dnsmasq
 
 - Install **UncomplicatedFirewall** for logging on to the test target by using port forwarding:
 
@@ -46,19 +65,69 @@ Setting up the Raspberry Pi
 
         $ apt-get install ufw
 
+Configuring the DHCP Server:
+____________________________
+
+.. note:: The Raspberry Pi has two ethernet interfaces: **eth0** and **eth1**. **eth1** is connected to the outside network and its MAC address has been issued a fixed IP address and/or a fixed DNS name, e.g., **sca-app-carrier-board-test-gw**. This is an external ethernet adapter. **eth0** is used to provide a private network exclusively for the test target. This is the own ethernet interface of the Raspberry Pi.
+
+- Assign a static IP address to Raspberry Pi's **eth0** interface. The ``/etc/network/interfaces`` file should look similar to this:
+
+    .. code-block:: console
+
+        auto lo
+        iface lo inet loopback
+
+        auto eth0
+        iface eth0 inet static
+        address 10.1.1.1
+        netmask 255.255.255.0
+
+        auto eth1
+        iface eth1 inet dhcp
+
+- Restart networking daemon and ensure eth0 indeed has the IP addredd:
+
+    .. code-block:: console
+
+        $ systemctl restart networking
+
+- Set up DHCP server with minimal configuration. Edit the ``/etc/dnsmasq.conf`` file to have only the following settings:
+
+    .. code-block:: console
+
+        interface=eth0
+        no-resolv
+        log-dhcp
+        dhcp-range=10.1.1.100,10.1.1.150,60s
+        dhcp-host=00:50:c2:f8:0e:5d,10.1.1.60,60s
+        dhcp-host=00:50:c2:f8:0e:5e,10.1.1.61,60s
+        dhcp-host=00:50:c2:f8:0e:5f,10.1.1.62,60s
+
+    As long as the hardware address of the network interfaces of the test target are unchanged, the interfaces will have known IP addresses.
+
+- Restart dnsmasq daemon and verify that the interfaces indeed have been assigned known IP addresses:
+
+    .. code-block:: console
+
+        $ systemctl restart dnsmasq
+
+Configuring Route to Test Target:
+_________________________________
+
+.. note:: The test target should ideally not be able to access a public network. But for testing purposes it should be reachable over SSH only through the test gateway, both locally and remotely.
 
 - In ``/etc/default/ufw``, change the value of ``DEFAULT_INPUT_POLICY`` and ``DEFAULT_FORWARD_POLICY`` to ``"ACCEPT"``.
 
 - In ``/etc/ufw/sysctl.conf``, set the value of ``net/ipv4/ip_forward`` to 1 (uncomment line if necessary).
 
-- Add the following line at the bottom of ``/root/.bashrc`` and re-login to the Raspberry Pi:
+- Add the following line at the bottom of ``/root/.bashrc`` and reload it:
 
     .. code-block:: console
 
         echo 1 | sudo tee /proc/sys/net/ipv4/conf/eth0/route_localnet &>/dev/null
+        source /root/.bashrc
 
-
-- Add the following lines at the bottom of ``etc/ufw/before.rules`` (ensure COMMIT was called immediately before these lines):
+- Add the following lines at the bottom of ``etc/ufw/before.rules`` (immediately after a COMMIT statement):
 
     .. code-block:: console
 
@@ -66,9 +135,9 @@ Setting up the Raspberry Pi
         :PREROUTING ACCEPT [0:0]
         :POSTROUTING ACCEPT [0:0]
 
-        -A PREROUTING -p tcp --dport 9022 -j DNAT --to-destination <target_ip>:22
-        -I POSTROUTING -p tcp -d <target_ip> --dport 22 -j MASQUERADE
-        -A OUTPUT -p tcp --dport 9022 -j DNAT -o lo --to-destination <target_ip>:22
+        -A PREROUTING -p tcp --dport 9022 -j DNAT --to-destination 10.1.1.62:22
+        -I POSTROUTING -p tcp -d 10.1.1.62 --dport 22 -o eth0 -j MASQUERADE
+        -A OUTPUT -p tcp --dport 9022 -j DNAT --to-destination 10.1.1.62:22 -o lo
 
         COMMIT
 
@@ -79,14 +148,14 @@ Setting up the Raspberry Pi
         $ ufw disable
         $ ufw enable
 
-- Now it should be possible to log in to the test target without knowing the test target's IP address:
+- Now it should be possible to log in to the test target:
 
     .. code-block:: console
 
         # From the Raspberry Pi
         $ ssh root@localhost -p 9022
         # From another node in the network
-        $ ssh root@<raspberry_pi_ip> -p 9022
+        $ ssh root@sca-app-carrier-board-test-gw -p 9022
 
 - Now the system is ready for manual integration testing.
 
