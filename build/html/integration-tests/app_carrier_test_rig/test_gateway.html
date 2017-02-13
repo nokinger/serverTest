@@ -92,7 +92,7 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../target/index.html">1. Target System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../target/index.html">1. Target Systems</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../yocto/index.html">2. The Yocto Buildsystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../crossdev/index.html">3. (Cross-) Application Development</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Integration Tests</a><ul class="current">
@@ -104,6 +104,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#setting-up-the-raspberry-pi">4.3.2.1. Setting up the Raspberry Pi</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#best-practises-for-running-tests-manually">4.3.2.2. Best Practises for Running Tests Manually</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#adding-the-raspberry-pi-as-a-jenkins-slave">4.3.2.3. Adding the Raspberry Pi as a Jenkins Slave</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-a-jenkins-pipeline-for-the-slave">4.3.2.4. Setting Up a Jenkins Pipeline for the Slave</a></li>
 </ul>
 </li>
 </ul>
@@ -164,29 +165,49 @@
 <p>The test gateway is a hardware setup that comprises a <strong>Raspberry Pi 3 model B</strong> and numerous physical connections to the application carrier board to be tested. For a detailed look into the hardware setup, see <a class="reference internal" href="test_hardware.html#itest-testrig-test-hardware"><span class="std std-ref">Test Hardware</span></a>. The following sections describe the minimal software setup inside the Raspberry Pi required to run tests manually or as a part of an automated pipeline through <em>Jenkins</em>.</p>
 <div class="section" id="setting-up-the-raspberry-pi">
 <h2>4.3.2.1. Setting up the Raspberry Pi<a class="headerlink" href="#setting-up-the-raspberry-pi" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-an-os-image">
+<h3>4.3.2.1.1. Creating an OS Image:<a class="headerlink" href="#creating-an-os-image" title="Permalink to this headline">¶</a></h3>
 <ul>
-<li><p class="first">Download the <a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian image</a>. If a desktop environment is not required, a <a class="reference external" href="https://sourceforge.net/projects/minibian/">Minibian image</a> might be more preferable.</p>
+<li><p class="first">Download the <a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian image</a>. If a graphical desktop environment is not required, a <a class="reference external" href="https://sourceforge.net/projects/minibian/">Minibian image</a> might be preferable.</p>
 </li>
 <li><p class="first">Copy the image to a microSD card:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dd <span class="k">if</span><span class="o">=</span>/path/to/image <span class="nv">of</span><span class="o">=</span>/device/name
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dd <span class="k">if</span><span class="o">=</span>/path/to/image <span class="nv">of</span><span class="o">=</span>/device/name <span class="nv">bs</span><span class="o">=</span>100M
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">For cards with large capacity, there will be unpartitioned space left on the card. Use a partitioning utility like <strong>parted</strong> to expand the root partition as necessary. This expansion is recommended for working with Docker images.</p>
+<li><p class="first">Boot into the Raspberry Pi with the microSD card and an ethernet connection (along with other necessary peripherals like display unit and input device(s)).</p>
 </li>
-<li><p class="first">Boot into the Raspberry Pi with the microSD card and an ethernet connection (along with other necessary peripherals like display unit and input device).</p>
+<li><p class="first">If you chose <em>Minibian</em>, there are some minor differences to note from <em>Raspbian</em>:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><em>Minibian</em> installation does not automatically expand partitions. It can be done by installing and running <code class="docutils literal"><span class="pre">raspi-config</span></code>:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install raspi-config
+</pre></div>
+</div>
+</div></blockquote>
 </li>
-<li><p class="first">Log in with the default credentials (username: <strong>root</strong>, password: <strong>raspberry</strong>) and change the password for security reasons.</p>
+<li><p class="first"><em>Minibian</em> by default only has user <em>root</em></p>
 </li>
-<li><p class="first"><em>Optional:</em> It is likely that the OS will not have the keyboard layout you prefer. Install <strong>console-data</strong> and choose the correct layout during installation to remedy that:</p>
+<li><p class="first">There is no utility pre-installed to change keyboard layout. To set the keyboard layout of your choice, install <strong>console-data</strong> and choose the correct layout during installation:</p>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install console-data
 </pre></div>
 </div>
 </div></blockquote>
 </li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Log in with the default credentials (username: <strong>root</strong> (<em>Minibian</em>) or <strong>pi</strong> (<em>Raspbian</em>), password: <strong>raspberry</strong>) and change the password for security reasons.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="installing-required-software">
+<h3>4.3.2.1.2. Installing Required Software:<a class="headerlink" href="#installing-required-software" title="Permalink to this headline">¶</a></h3>
+<ul>
 <li><p class="first">Install <strong>curl</strong>, which is a requirement for Docker installation:</p>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install curl
@@ -194,9 +215,130 @@
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Install <strong>Docker</strong>.</p>
+<li><p class="first">Install <strong>Docker</strong>:</p>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -sSL get.docker.com <span class="p">|</span> sh
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Install <strong>dnsmasq</strong> for running a private network:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install dnsmasq
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Install <strong>UncomplicatedFirewall</strong> for logging on to the test target by using port forwarding:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install ufw
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="configuring-the-dhcp-server">
+<h3>4.3.2.1.3. Configuring the DHCP Server:<a class="headerlink" href="#configuring-the-dhcp-server" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Raspberry Pi has two ethernet interfaces: <strong>eth0</strong> and <strong>eth1</strong>. <strong>eth1</strong> is connected to the outside network and its MAC address has been issued a fixed IP address and/or a fixed DNS name, e.g., <strong>sca-app-carrier-board-test-gw</strong>. This is an external ethernet adapter. <strong>eth0</strong> is used to provide a private network exclusively for the test target. This is the own ethernet interface of the Raspberry Pi.</p>
+</div>
+<ul>
+<li><p class="first">Assign a static IP address to Raspberry Pi&#8217;s <strong>eth0</strong> interface. The <code class="docutils literal"><span class="pre">/etc/network/interfaces</span></code> file should look similar to this:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">auto lo</span>
+<span class="go">iface lo inet loopback</span>
+
+<span class="go">auto eth0</span>
+<span class="go">iface eth0 inet static</span>
+<span class="go">address 10.1.1.1</span>
+<span class="go">netmask 255.255.255.0</span>
+
+<span class="go">auto eth1</span>
+<span class="go">iface eth1 inet dhcp</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Restart networking daemon and ensure eth0 indeed has the IP addredd:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> systemctl restart networking
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Set up DHCP server with minimal configuration. Edit the <code class="docutils literal"><span class="pre">/etc/dnsmasq.conf</span></code> file to have only the following settings:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">interface=eth0</span>
+<span class="go">no-resolv</span>
+<span class="go">log-dhcp</span>
+<span class="go">dhcp-range=10.1.1.100,10.1.1.150,60s</span>
+<span class="go">dhcp-host=00:50:c2:f8:0e:5d,10.1.1.60,60s</span>
+<span class="go">dhcp-host=00:50:c2:f8:0e:5e,10.1.1.61,60s</span>
+<span class="go">dhcp-host=00:50:c2:f8:0e:5f,10.1.1.62,60s</span>
+</pre></div>
+</div>
+<p>As long as the hardware address of the network interfaces of the test target are unchanged, the interfaces will have known IP addresses.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Restart dnsmasq daemon and verify that the interfaces indeed have been assigned known IP addresses:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> systemctl restart dnsmasq
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="configuring-route-to-test-target">
+<h3>4.3.2.1.4. Configuring Route to Test Target:<a class="headerlink" href="#configuring-route-to-test-target" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The test target should ideally not be able to access a public network. But for testing purposes it should be reachable over SSH only through the test gateway, both locally and remotely.</p>
+</div>
+<ul>
+<li><p class="first">In <code class="docutils literal"><span class="pre">/etc/default/ufw</span></code>, change the value of <code class="docutils literal"><span class="pre">DEFAULT_INPUT_POLICY</span></code> and <code class="docutils literal"><span class="pre">DEFAULT_FORWARD_POLICY</span></code> to <code class="docutils literal"><span class="pre">&quot;ACCEPT&quot;</span></code>.</p>
+</li>
+<li><p class="first">In <code class="docutils literal"><span class="pre">/etc/ufw/sysctl.conf</span></code>, set the value of <code class="docutils literal"><span class="pre">net/ipv4/ip_forward</span></code> to 1 (uncomment line if necessary).</p>
+</li>
+<li><p class="first">Add the following line at the bottom of <code class="docutils literal"><span class="pre">/root/.bashrc</span></code> and reload it:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">echo 1 | sudo tee /proc/sys/net/ipv4/conf/eth0/route_localnet &amp;&gt;/dev/null</span>
+<span class="go">source /root/.bashrc</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Add the following lines at the bottom of <code class="docutils literal"><span class="pre">etc/ufw/before.rules</span></code> (immediately after a COMMIT statement):</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">*nat</span>
+<span class="go">:PREROUTING ACCEPT [0:0]</span>
+<span class="go">:POSTROUTING ACCEPT [0:0]</span>
+
+<span class="go">-A PREROUTING -p tcp --dport 9022 -j DNAT --to-destination 10.1.1.62:22</span>
+<span class="go">-I POSTROUTING -p tcp -d 10.1.1.62 --dport 22 -o eth0 -j MASQUERADE</span>
+<span class="go">-A OUTPUT -p tcp --dport 9022 -j DNAT --to-destination 10.1.1.62:22 -o lo</span>
+
+<span class="go">COMMIT</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Restart <strong>UncomplicatedFirewall</strong>:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ufw disable
+<span class="gp">$</span> ufw <span class="nb">enable</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Now it should be possible to log in to the test target:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> From the Raspberry Pi
+<span class="gp">$</span> ssh root@localhost -p 9022
+<span class="gp">#</span> From another node in the network
+<span class="gp">$</span> ssh root@sca-app-carrier-board-test-gw -p 9022
 </pre></div>
 </div>
 </div></blockquote>
@@ -204,6 +346,7 @@
 <li><p class="first">Now the system is ready for manual integration testing.</p>
 </li>
 </ul>
+</div>
 </div>
 <div class="section" id="best-practises-for-running-tests-manually">
 <h2>4.3.2.2. Best Practises for Running Tests Manually<a class="headerlink" href="#best-practises-for-running-tests-manually" title="Permalink to this headline">¶</a></h2>
@@ -222,7 +365,7 @@
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Create a directory under <code class="docutils literal"><span class="pre">/root</span></code> named after your uniquely recognisable username:</p>
+<li><p class="first">Create a directory under <code class="docutils literal"><span class="pre">/home</span></code> named after your uniquely recognisable username:</p>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir -p ~/&lt;username&gt;
 </pre></div>
@@ -245,7 +388,7 @@
 <ul>
 <li><p class="first">Add a user named <strong>jenkins</strong> with its own home directory:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> useradd jenkins
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> adduser jenkins
 </pre></div>
 </div>
 </div></blockquote>
@@ -261,7 +404,112 @@
 </li>
 <li><p class="first">Add the Raspberry Pi as a Jenkins <cite>Permanent Agent</cite> using the <a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/SSH+Slaves+plugin">SSH Slaves plugin</a>.</p>
 </li>
-<li><p class="first">Now the system can be used to run integration tests as a Jenkins job.</p>
+<li><p class="first">Since only very specific jobs are to be run on this agent, set the <strong>Usage</strong> option to <strong>Only build jobs with label expressions matching this node</strong>.</p>
+</li>
+<li><p class="first">Assign a label to the agent, e.g., <code class="docutils literal"><span class="pre">sca-test-host</span></code>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="setting-up-a-jenkins-pipeline-for-the-slave">
+<h2>4.3.2.4. Setting Up a Jenkins Pipeline for the Slave<a class="headerlink" href="#setting-up-a-jenkins-pipeline-for-the-slave" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Ensure that the <code class="docutils literal"><span class="pre">sca-test-host</span></code> has all peripheral devices attached as necessary.</p>
+</li>
+<li><p class="first">Add the user <code class="docutils literal"><span class="pre">jenkins</span></code> to the group <code class="docutils literal"><span class="pre">docker</span></code>:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> usermod -a -G docker jenkins
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Install <code class="docutils literal"><span class="pre">sudo</span></code> on the test host if it is not present already:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install sudo
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Install any other utilities necessary for running the pipeline script as user <code class="docutils literal"><span class="pre">jenkins</span></code> on the <code class="docutils literal"><span class="pre">sca-test-host</span></code>:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install pv lsof
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">After the package <code class="docutils literal"><span class="pre">sudo</span></code> has been installed, the file <code class="docutils literal"><span class="pre">/etc/sudoers</span></code> will be available. Add permissions for the jenkins user to run certain commands as necessary for the pipeline script:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">echo</span> <span class="s1">&#39;$USER ALL= NOPASSWD: /bin/dd&#39;</span> &gt;&gt; /etc/sudoers<span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">From the Jenkins dashboard home, choose <cite>New Item &gt; Pipeline</cite> (assuming the <em>Pipeline</em> plugin is already installed).</p>
+</li>
+<li><p class="first">In the general options, check <em>Do not allow concurrent builds</em>.</p>
+</li>
+<li><p class="first">In the <em>Build Triggers</em> options, set a <em>Poll SCM</em> schedule, e.g., <code class="docutils literal"><span class="pre">H/5****</span></code>.</p>
+</li>
+<li><p class="first">Add a build script. It must be ensured that <code class="docutils literal"><span class="pre">docker</span> <span class="pre">exec</span></code> commands are NOT run from this script with <code class="docutils literal"><span class="pre">--interactive</span></code> argument. A working example has been provided below:</p>
+<blockquote>
+<div><div class="highlight-groovy"><div class="highlight"><pre><span></span><span class="c1">// This script requires the Jenkins node &#39;sca-test-host&#39; to have the console utility &#39;pipe view&#39;</span>
+<span class="c1">// It can be installed with the following command:</span>
+<span class="c1">//     apt-get install pv</span>
+
+<span class="n">BUILD_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;app-carrier-board-kernel4.1&quot;</span>
+<span class="n">BUILD_TARGET</span> <span class="o">=</span> <span class="s2">&quot;sca-enterprise-image&quot;</span>
+<span class="n">TARGET_HW</span> <span class="o">=</span> <span class="s2">&quot;ls1021atwr&quot;</span>
+<span class="n">REMOTE_YOCTO_CACHE</span> <span class="o">=</span> <span class="s2">&quot;nas.pb.avantys.de:/mnt/nas/data/Projekte/SCA/yocto&quot;</span>  <span class="c1">// set to &quot;none&quot; if no cache available</span>
+<span class="n">IMAGE_NAME</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Image Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s1">&#39;docker&#39;</span><span class="o">){</span>
+        <span class="n">checkout</span><span class="o">([</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;GitSCM&#39;</span><span class="o">,</span> <span class="nl">branches:</span> <span class="o">[[</span><span class="nl">name:</span> <span class="s1">&#39;develop&#39;</span><span class="o">]],</span> <span class="nl">doGenerateSubmoduleConfigurations:</span> <span class="kc">false</span><span class="o">,</span> <span class="nl">userRemoteConfigs:</span> <span class="o">[[</span><span class="nl">credentialsId:</span> <span class="s1">&#39;8d553a3a-6a07-4c8d-89c4-ac74d7878434&#39;</span><span class="o">,</span> <span class="nl">url:</span> <span class="s1">&#39;ssh://git@phabricator.pb.avantys.de/diffusion/86/sca-os.git&#39;</span><span class="o">]]])</span>
+        <span class="n">sh</span> <span class="s2">&quot;tools/run_in_container.sh build tools/build/bitbake.sh ./build/${BUILD_CONFIG} ${REMOTE_YOCTO_CACHE} ${BUILD_TARGET}&quot;</span>
+        <span class="n">fileExists</span> <span class="s2">&quot;${JOB_NAME}/build/${BUILD_CONFIG}/tmp/deploy/images/${TARGET_HW}/${BUILD_TARGET}-${TARGET_HW}.sca-sdimg&quot;</span>
+        <span class="n">dir</span><span class="o">(</span><span class="s2">&quot;build/${BUILD_CONFIG}/tmp/deploy/images/${TARGET_HW}&quot;</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">img_path</span> <span class="o">=</span> <span class="n">sh</span><span class="o">(</span><span class="nl">returnStdout:</span> <span class="kc">true</span><span class="o">,</span> <span class="nl">script:</span> <span class="s2">&quot;readlink -f sca-enterprise-image-${TARGET_HW}.sca-sdimg&quot;</span><span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+            <span class="n">IMAGE_NAME</span> <span class="o">=</span> <span class="n">sh</span><span class="o">(</span><span class="nl">returnStdout:</span> <span class="kc">true</span><span class="o">,</span> <span class="nl">script:</span> <span class="s2">&quot;basename ${img_path}&quot;</span><span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+            <span class="n">stash</span> <span class="nl">includes:</span> <span class="s2">&quot;${IMAGE_NAME}&quot;</span><span class="o">,</span> <span class="nl">name:</span> <span class="s1">&#39;sca-sdimg&#39;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Image Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s1">&#39;sca-test-host&#39;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">dir</span><span class="o">(</span><span class="s2">&quot;build/${BUILD_CONFIG}/tmp/deploy/images/${TARGET_HW}&quot;</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">unstash</span> <span class="s1">&#39;sca-sdimg&#39;</span>
+            <span class="n">sh</span> <span class="s1">&#39;pv `ls -t *.rootfs.sca-sdimg | head -1` | sudo dd of=/dev/sda bs=100M&#39;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Manual Approval&#39;</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">timeout</span><span class="o">(</span><span class="nl">time:</span><span class="mi">5</span><span class="o">,</span> <span class="nl">unit:</span><span class="s1">&#39;HOURS&#39;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">input</span> <span class="nl">message:</span> <span class="s1">&#39;Please boot the test target with the newly written microSD card&#39;</span><span class="o">,</span> <span class="nl">ok:</span> <span class="s1">&#39;Ready&#39;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Integration Test&#39;</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s1">&#39;sca-test-host&#39;</span><span class="o">){</span>
+        <span class="n">checkout</span><span class="o">([</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;GitSCM&#39;</span><span class="o">,</span> <span class="nl">branches:</span> <span class="o">[[</span><span class="nl">name:</span> <span class="s1">&#39;develop&#39;</span><span class="o">]],</span> <span class="nl">doGenerateSubmoduleConfigurations:</span> <span class="kc">false</span><span class="o">,</span> <span class="nl">extensions:</span> <span class="o">[[</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;RelativeTargetDirectory&#39;</span><span class="o">,</span> <span class="nl">relativeTargetDir:</span> <span class="s1">&#39;itests&#39;</span><span class="o">],</span> <span class="o">[</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;BuildChooserSetting&#39;</span><span class="o">,</span> <span class="nl">buildChooser:</span> <span class="o">[</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;DefaultBuildChooser&#39;</span><span class="o">]]],</span> <span class="nl">userRemoteConfigs:</span> <span class="o">[[</span><span class="nl">credentialsId:</span> <span class="s1">&#39;ada433f1-3c4a-4ec9-a8b2-68ad746e01fa&#39;</span><span class="o">,</span> <span class="nl">url:</span> <span class="s1">&#39;ssh://git@phabricator.pb.avantys.de/diffusion/92/sca-integration-tests.git&#39;</span><span class="o">]]])</span>
+        <span class="n">dir</span><span class="o">(</span><span class="s2">&quot;itests&quot;</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sh</span> <span class="s2">&quot;testrunner/run_in_container.sh&quot;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deliver&#39;</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s1">&#39;docker&#39;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">archiveArtifacts</span> <span class="nl">artifacts:</span> <span class="s2">&quot;build/${BUILD_CONFIG}/tmp/deploy/images/${TARGET_HW}/${IMAGE_NAME}&quot;</span><span class="o">,</span> <span class="nl">onlyIfSuccessful:</span> <span class="kc">true</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">For a new push to branch <code class="docutils literal"><span class="pre">develop</span></code>, a new build job will start within 5 minutes.</p>
+</li>
+<li><p class="first">For different build configurations and target hardware, it suffices to adjust the global variable values at the top of the script.</p>
 </li>
 </ul>
 </div>

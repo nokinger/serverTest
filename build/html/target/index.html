@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Target System &mdash; SCA Buildsystem 1.0.0 documentation</title>
+  <title>1. Target Systems &mdash; SCA Buildsystem 1.0.0 documentation</title>
   
 
   
@@ -34,7 +34,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="SCA Buildsystem 1.0.0 documentation" href="../index.html"/>
-        <link rel="next" title="1.1. Connecting the application-carrier-board to your development system" href="wiring.html"/>
+        <link rel="next" title="1.1. Application Carrier Board" href="wiring_ls1021.html"/>
         <link rel="prev" title="SCA Embedded Linux Buildsystem" href="../index.html"/>
     <script src="../_static/tty-player/webcomponents-lite.min.js"></script>
     <link href="../_static/tty-player/tty-player.css" rel="stylesheet"></link>
@@ -91,12 +91,9 @@
             
             
                 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Target System</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="wiring.html">1.1. Connecting the application-carrier-board to your development system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wiring.html#install-required-software-on-your-dev-host">1.2. Install required software on your dev-host</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wiring.html#install-an-image">1.3. Install an image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wiring.html#booting-the-board">1.4. Booting the board</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wiring.html#references">1.5. References</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Target Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wiring_ls1021.html">1.1. Application Carrier Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_mpxls1043.html">1.2. MXPLS1043</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../yocto/index.html">2. The Yocto Buildsystem</a></li>
@@ -133,7 +130,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>1. Target System</li>
+    <li>1. Target Systems</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -147,15 +144,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="target-system">
-<h1>1. Target System<a class="headerlink" href="#target-system" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="target-systems">
+<h1>1. Target Systems<a class="headerlink" href="#target-systems" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="wiring.html">1.1. Connecting the application-carrier-board to your development system</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wiring.html#install-required-software-on-your-dev-host">1.2. Install required software on your dev-host</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wiring.html#install-an-image">1.3. Install an image</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wiring.html#booting-the-board">1.4. Booting the board</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wiring.html#references">1.5. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wiring_ls1021.html">1.1. Application Carrier Board</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wiring_ls1021.html#connecting-the-application-carrier-board-to-your-development-system">1.1.1. Connecting the application-carrier-board to your development system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_ls1021.html#install-required-software-on-your-dev-host">1.1.2. Install required software on your dev-host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_ls1021.html#install-an-image">1.1.3. Install an image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_ls1021.html#booting-the-board">1.1.4. Booting the board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_ls1021.html#references">1.1.5. References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wiring_mpxls1043.html">1.2. MXPLS1043</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wiring_mpxls1043.html#connecting-the-mxpls1043-to-your-development-system">1.2.1. Connecting the MXPLS1043 to your development system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_mpxls1043.html#install-required-software-on-your-dev-host">1.2.2. Install required software on your dev-host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_mpxls1043.html#install-an-image">1.2.3. Install an image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_mpxls1043.html#booting-the-board-first-version">1.2.4. Booting the board (First Version)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiring_mpxls1043.html#references">1.2.5. References</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -167,7 +175,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="wiring.html" class="btn btn-neutral float-right" title="1.1. Connecting the application-carrier-board to your development system" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="wiring_ls1021.html" class="btn btn-neutral float-right" title="1.1. Application Carrier Board" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../index.html" class="btn btn-neutral" title="SCA Embedded Linux Buildsystem" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
