@@ -69,9 +69,9 @@ After connecting the board run ``picocom`` and power on the board. Since no auto
     setenv bootargs.sd root=/dev/mmcblk0p2 rootfstype=ext4 rootflags=data=journal rw console=ttyS0,115200 rootwait
     setenv sdbootPre1 ext2load mmc 0:2 0x81000000 /boot/${dtbfile} 
     setenv sdbootPre2 ext2load mmc 0:2 0x82000000 /boot/uImage  
-    setenv sdbootPre3 set bootargs ${bootargs.sd}
+    setenv sdbootPre3 setenv bootargs ${bootargs.sd}
     setenv sdboot bootm 0x82000000 - 0x81000000
-    setenv bootcmd run sdbootPre sdboot
+    setenv bootcmd run sdbootPre1  sdbootPre2 sdbootPre3 sdboot
     saveenv
 
 If everything worked fine something like 
