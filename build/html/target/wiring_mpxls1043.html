@@ -144,7 +144,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/target/wiring_mpxls1043.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/target/wiring_mpxls1043.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -201,9 +201,9 @@ for the root-user.</p>
 <span class="go">setenv bootargs.sd root=/dev/mmcblk0p2 rootfstype=ext4 rootflags=data=journal rw console=ttyS0,115200 rootwait</span>
 <span class="go">setenv sdbootPre1 ext2load mmc 0:2 0x81000000 /boot/${dtbfile}</span>
 <span class="go">setenv sdbootPre2 ext2load mmc 0:2 0x82000000 /boot/uImage</span>
-<span class="go">setenv sdbootPre3 set bootargs ${bootargs.sd}</span>
+<span class="go">setenv sdbootPre3 setenv bootargs ${bootargs.sd}</span>
 <span class="go">setenv sdboot bootm 0x82000000 - 0x81000000</span>
-<span class="go">setenv bootcmd run sdbootPre sdboot</span>
+<span class="go">setenv bootcmd run sdbootPre1  sdbootPre2 sdbootPre3 sdboot</span>
 <span class="go">saveenv</span>
 </pre></div>
 </div>
