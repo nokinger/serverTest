@@ -136,7 +136,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/common_tasks/index.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/common_tasks/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -153,13 +153,13 @@
 <div class="section" id="ubuntu-16-04">
 <h3>5.1.1. Ubuntu &gt;=16.04<a class="headerlink" href="#ubuntu-16-04" title="Permalink to this headline">¶</a></h3>
 <p>This Ubuntu version has an up-to-date version of docker that can be installed from the ubuntu packages:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install docker.io
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo apt-get install docker.io
 </pre></div>
 </div>
 <ul class="simple">
 <li>Add your user to the docker-group:</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo adduser USERNAME docker
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo adduser USERNAME docker
 </pre></div>
 </div>
 <ul class="simple">
@@ -172,7 +172,7 @@
 <ul class="simple">
 <li>Add the docker key-server:</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get update
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo apt-get update
 <span class="gp">$</span> sudo apt-get install apt-transport-https ca-certificates
 <span class="gp">$</span> sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 </pre></div>
@@ -180,13 +180,13 @@
 <ul class="simple">
 <li>Create a file <cite>/etc/apt/sources.list.d</cite> to add the docker package-repositories:</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">deb https://apt.dockerproject.org/repo ubuntu-trusty main</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">deb https://apt.dockerproject.org/repo ubuntu-trusty main</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>Now install docker:</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get update
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo apt-get update
 <span class="gp">$</span> sudo apt-get purge lxc-docker
 <span class="gp">$</span> sudo apt-get install apparmor
 <span class="gp">$</span> sudo apt-get install docker-engine
@@ -196,7 +196,7 @@
 <ul class="simple">
 <li>Add your user to the docker-group:</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo adduser USERNAME docker
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo adduser USERNAME docker
 </pre></div>
 </div>
 <ul class="simple">

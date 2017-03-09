@@ -143,7 +143,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/yocto/building_images.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/yocto/building_images.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -172,18 +172,18 @@ is used as the config-directory for bitbake to build.</li>
 <li><code class="docutils literal"><span class="pre">IMAGE</span></code> is the name of the image-recipe; currently <code class="docutils literal"><span class="pre">sca-enterprise-image</span></code>, <code class="docutils literal"><span class="pre">sca-sys6000-image</span></code>
 and <code class="docutils literal"><span class="pre">sca-asc5000-image</span></code> are available.</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
 <span class="gp">$</span> ./tools/run_in_container.sh CONTAINER ./tools/build/bitbake.sh ./build/BUILDCONFIG none IMAGE
 </pre></div>
 </div>
 <p>To build the <code class="docutils literal"><span class="pre">sca-enterprise-image</span></code> for the <code class="docutils literal"><span class="pre">application-carrier-board</span></code> run this command:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
 <span class="gp">$</span> ./tools/run_in_container.sh build ./tools/build/bitbake.sh ./build/app-carrier-board none sca-enterprise-image
 </pre></div>
 </div>
 <p>To build the <code class="docutils literal"><span class="pre">sca-enterprise-image</span></code> for the <code class="docutils literal"><span class="pre">application-carrier-board</span></code> with a common cache on nfs at
 AVANTYS run this command:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
 <span class="gp">$</span> ./tools/run_in_container.sh build ./tools/build/bitbake.sh ./build/app-carrier-board nas.pb.avantys.de:/mnt/nas/data/Projekte/SCA/yocto sca-enterprise-image
 </pre></div>
 </div>
@@ -192,7 +192,7 @@ AVANTYS run this command:</p>
 <div class="section" id="flashing-an-image-to-an-sd-card">
 <span id="yocto-build-flash-sdcard"></span><h2>2.2.3. Flashing an image to an sd-card<a class="headerlink" href="#flashing-an-image-to-an-sd-card" title="Permalink to this headline">¶</a></h2>
 <p>To write the image built previously to an sd-card, use this command:</p>
-<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dd <span class="k">if</span><span class="o">=</span>./build/app-carrier-board/tmp/deploy/images/ls1021atwr/sca-image-application-ls1021atwr.sca-sdimg <span class="nv">of</span><span class="o">=</span>/dev/MMCDEVICE <span class="nv">bs</span><span class="o">=</span>1M
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo dd <span class="k">if</span><span class="o">=</span>./build/app-carrier-board/tmp/deploy/images/ls1021atwr/sca-image-application-ls1021atwr.sca-sdimg <span class="nv">of</span><span class="o">=</span>/dev/MMCDEVICE <span class="nv">bs</span><span class="o">=</span>1M
 </pre></div>
 </div>
 <dl class="docutils">
