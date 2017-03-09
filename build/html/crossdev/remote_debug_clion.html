@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3.2. Setup your target-board for development &mdash; SCA Buildsystem 1.0.0 documentation</title>
+  <title>3.5. Remote Debugging Applications with CLion &mdash; SCA Buildsystem 1.0.0 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="SCA Buildsystem 1.0.0 documentation" href="../index.html"/>
         <link rel="up" title="3. (Cross-) Application Development" href="index.html"/>
-        <link rel="next" title="3.3. Building the application-controller" href="build.html"/>
-        <link rel="prev" title="3.1. Setup your host for development" href="devhost.html"/>
+        <link rel="next" title="4. Integration Tests" href="../integration-tests/index.html"/>
+        <link rel="prev" title="3.4. Hints on programming rt-applications" href="rt_hints.html"/>
     <script src="../_static/tty-player/webcomponents-lite.min.js"></script>
     <link href="../_static/tty-player/tty-player.css" rel="stylesheet"></link>
     <script src="../_static/tty-player/term.js"></script>
@@ -96,10 +96,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../yocto/index.html">2. The Yocto Buildsystem</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">3. (Cross-) Application Development</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="devhost.html">3.1. Setup your host for development</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.2. Setup your target-board for development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target.html">3.2. Setup your target-board for development</a></li>
 <li class="toctree-l2"><a class="reference internal" href="build.html">3.3. Building the application-controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rt_hints.html">3.4. Hints on programming rt-applications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="remote_debug_clion.html">3.5. Remote Debugging Applications with CLion</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.5. Remote Debugging Applications with CLion</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../integration-tests/index.html">4. Integration Tests</a></li>
@@ -136,11 +136,11 @@
       
           <li><a href="index.html">3. (Cross-) Application Development</a> &raquo;</li>
       
-    <li>3.2. Setup your target-board for development</li>
+    <li>3.5. Remote Debugging Applications with CLion</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/crossdev/target.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/crossdev/remote_debug_clion.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -150,9 +150,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="setup-your-target-board-for-development">
-<h1>3.2. Setup your target-board for development<a class="headerlink" href="#setup-your-target-board-for-development" title="Permalink to this headline">¶</a></h1>
-<p>See <a class="reference internal" href="../target/wiring_ls1021.html#target-wiring-appcarrier"><span class="std std-ref">Application Carrier Board</span></a>, or <a class="reference internal" href="../target/wiring_mpxls1043.html#target-wiring-sbc-eval"><span class="std std-ref">MXPLS1043</span></a></p>
+  <div class="section" id="remote-debugging-applications-with-clion">
+<h1>3.5. Remote Debugging Applications with CLion<a class="headerlink" href="#remote-debugging-applications-with-clion" title="Permalink to this headline">¶</a></h1>
+<p>With a cross-development SDK installed on the development host, it is possible to use CLion to initiate a remote debugging session through the following steps:</p>
+<div class="figure" id="id1">
+<img alt="../_images/CLion_RDebug_EditConfig.png" src="../_images/CLion_RDebug_EditConfig.png" />
+<p class="caption"><span class="caption-text">With the project open, edit the <em>run configurations</em>.</span></p>
+</div>
+<div class="figure" id="id2">
+<img alt="../_images/CLion_RDebug_AddRemoteDebugConfig.png" src="../_images/CLion_RDebug_AddRemoteDebugConfig.png" />
+<p class="caption"><span class="caption-text">Add a GDB remote debug configuration.</span></p>
+</div>
+<div class="figure" id="id3">
+<img alt="../_images/CLion_RDebug_RemoteDebugConfigValues.png" src="../_images/CLion_RDebug_RemoteDebugConfigValues.png" />
+<p class="caption"><span class="caption-text">From the SDK install path, add the debugger compiled for host as <code class="docutils literal"><span class="pre">GDB</span></code>. Add protocol, IP address of the target and gdbserver port in <code class="docutils literal"><span class="pre">'target</span> <span class="pre">remote'</span> <span class="pre">args</span></code>. Add the local copy of the cross compiled binary as the <code class="docutils literal"><span class="pre">Symbol</span> <span class="pre">file</span></code>. Add the target component of the SDK&#8217;s sysroot as <code class="docutils literal"><span class="pre">Sysroot</span></code>. Add an external tool to be run before launching a debug session.</span></p>
+</div>
+<div class="figure" id="id4">
+<img alt="../_images/CLion_RDebug_AddExternalTool.png" src="../_images/CLion_RDebug_AddExternalTool.png" />
+<p class="caption"><span class="caption-text">Create a new external tool.</span></p>
+</div>
+<div class="figure" id="id5">
+<img alt="../_images/CLion_RDebug_ToolKillGDBServer.png" src="../_images/CLion_RDebug_ToolKillGDBServer.png" />
+<p class="caption"><span class="caption-text">Set program and parameters to kill all running instances of <cite>gdbserver</cite> on target.</span></p>
+</div>
+<div class="figure" id="id6">
+<img alt="../_images/CLion_RDebug_ToolStartGDBServer.png" src="../_images/CLion_RDebug_ToolStartGDBServer.png" />
+<p class="caption"><span class="caption-text">Create another external tool to start <cite>gdbserver</cite> with the binary deployed on target. The port provided here should be the same port specified in the <code class="docutils literal"><span class="pre">'target</span> <span class="pre">remote'</span> <span class="pre">args</span></code> in the remote debugging configurations above. This tool should be executed after the previous tool.</span></p>
+</div>
+<div class="figure" id="id7">
+<img alt="../_images/CLion_RDebug_StartDebugging.png" src="../_images/CLion_RDebug_StartDebugging.png" />
+<p class="caption"><span class="caption-text">Now this configuration can be used to start a remote debugging session on the deployed binary.</span></p>
+</div>
 </div>
 
 
@@ -162,10 +190,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="build.html" class="btn btn-neutral float-right" title="3.3. Building the application-controller" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../integration-tests/index.html" class="btn btn-neutral float-right" title="4. Integration Tests" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="devhost.html" class="btn btn-neutral" title="3.1. Setup your host for development" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="rt_hints.html" class="btn btn-neutral" title="3.4. Hints on programming rt-applications" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
