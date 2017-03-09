@@ -8,4 +8,5 @@
    devhost
    target
    build
-   rt_hints 
+   rt_hints
+   remote_debug_clion
