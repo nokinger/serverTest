@@ -141,7 +141,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/integration-tests/overview.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/integration-tests/overview.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -153,6 +153,24 @@
             
   <div class="section" id="overview">
 <h1>4.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>The integration tests are based on the robotframework.</p>
+<p>Robot Framework is a generic test automation framework for acceptance testing and acceptance test-driven development (ATDD). It has easy-to-use tabular test data syntax and it utilizes the keyword-  driven testing approach. Its testing capabilities can be extended by test libraries implemented either with Python or Java, and users can create new higher-level keywords from existing ones using the  same syntax that is used for creating test cases.</p>
+<p>Robot Framework project is hosted on GitHub where you can find further documentation, source code, and issue tracker. Downloads are hosted at PyPI. The framework has a rich ecosystem around it   consisting of various generic test libraries and tools that are developed as separate projects.</p>
+<p>Robot Framework is operating system and application independent. The core framework is implemented using Python and runs also on Jython (JVM) and IronPython (.NET).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This documentation is not intended to explain robotframework but to give a fast introduction for this specific teststructure. For more information, reference and more visit <code class="docutils literal"><span class="pre">www.robotframework.org</span></code></p>
+</div>
+<p>For usage of the framework a teststructure has been implemented which influences the way tests can be written. The main target of this teststructure is actually being able to:</p>
+<ul class="simple">
+<li>test Board and Image specific in a generic way</li>
+<li>take care about prerequisites of single tests</li>
+</ul>
+<p>The key components of the teststructure is a tagging system. The way in which it is used in this test setup is descipted in <a class="reference internal" href="running_tests.html#tagging-system"><span class="std std-ref">Tagging System</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Finally a runscript for the tests has been written. In further documentation it is assumed that you use it to run tests.</p>
+</div>
 <div class="section" id="overall-structure">
 <h2>4.1.1. Overall Structure<a class="headerlink" href="#overall-structure" title="Permalink to this headline">¶</a></h2>
 <img alt="../_images/integration_test_structure.svg" src="../_images/integration_test_structure.svg" /></div>
