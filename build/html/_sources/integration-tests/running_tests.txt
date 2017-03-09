@@ -41,7 +41,7 @@ source folder.
 Tagging System
 ==============
 
-Robotframework offers the possibility to set several tags for testcases. These can be used to exclude or include tests, which allows structuring the whole test setup.
+Robotframework offers the possibility to set several tags for test cases. These can be used to exclude or include tests, which allows partitioning the whole test setup.
 Commonly a test which is not tagged is run always. Using tags tests can be prevented from being run or chosen to be run.
 For that the robotframework uses the command line options ``--include`` and ``--exclude``. These keywords can be used behind ``COMMAND ROBOT``. 
 In this test setup an important addition has been made. Depending on the specified ``TARGET_TYPE`` and ``IMAGE_TYPE`` all tests tagged with another ``TARGET_TYPE`` or ``IMAGE_TYPE`` but the specified are excluded.
@@ -56,4 +56,4 @@ Another tag category is the testlocation. The two given tags are ``local`` and `
 Board Specific Global Variables
 ===============================
 
-For some tests it is useful to make use of globally, board specific variables, which are used within all tests. Two good example are ``can`` and ``cpu`` tests. For some tests regarding these devices it is usefull to loop over the number of devices which then leads to short and convinient test cases. Those `number of CPUs` can be set within ``tests/000_global_setup.robot``. Again using tags those variables can be done board specific.
+For some tests it is useful to make use of global, board specific variables, which are used within all tests. Two good example are ``can`` and ``cpu`` tests. Being able to iterate over the number of devices as a variable makes the test cases generic and reduces space complexity. Those `number of CPUs` can be set within ``tests/000_global_setup.robot``. Again using tags those variables can be done board specific.

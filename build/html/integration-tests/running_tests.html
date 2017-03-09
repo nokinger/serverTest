@@ -184,7 +184,7 @@ source folder.</p>
 </div>
 <div class="section" id="tagging-system">
 <span id="id1"></span><h2>4.2.4. Tagging System<a class="headerlink" href="#tagging-system" title="Permalink to this headline">¶</a></h2>
-<p>Robotframework offers the possibility to set several tags for testcases. These can be used to exclude or include tests, which allows structuring the whole test setup.
+<p>Robotframework offers the possibility to set several tags for test cases. These can be used to exclude or include tests, which allows partitioning the whole test setup.
 Commonly a test which is not tagged is run always. Using tags tests can be prevented from being run or chosen to be run.
 For that the robotframework uses the command line options <code class="docutils literal"><span class="pre">--include</span></code> and <code class="docutils literal"><span class="pre">--exclude</span></code>. These keywords can be used behind <code class="docutils literal"><span class="pre">COMMAND</span> <span class="pre">ROBOT</span></code>.
 In this test setup an important addition has been made. Depending on the specified <code class="docutils literal"><span class="pre">TARGET_TYPE</span></code> and <code class="docutils literal"><span class="pre">IMAGE_TYPE</span></code> all tests tagged with another <code class="docutils literal"><span class="pre">TARGET_TYPE</span></code> or <code class="docutils literal"><span class="pre">IMAGE_TYPE</span></code> but the specified are excluded.
@@ -197,7 +197,7 @@ So the first important tag category are the board and image tags like <code clas
 </div>
 <div class="section" id="board-specific-global-variables">
 <h2>4.2.5. Board Specific Global Variables<a class="headerlink" href="#board-specific-global-variables" title="Permalink to this headline">¶</a></h2>
-<p>For some tests it is useful to make use of globally, board specific variables, which are used within all tests. Two good example are <code class="docutils literal"><span class="pre">can</span></code> and <code class="docutils literal"><span class="pre">cpu</span></code> tests. For some tests regarding these devices it is usefull to loop over the number of devices which then leads to short and convinient test cases. Those <cite>number of CPUs</cite> can be set within <code class="docutils literal"><span class="pre">tests/000_global_setup.robot</span></code>. Again using tags those variables can be done board specific.</p>
+<p>For some tests it is useful to make use of global, board specific variables, which are used within all tests. Two good example are <code class="docutils literal"><span class="pre">can</span></code> and <code class="docutils literal"><span class="pre">cpu</span></code> tests. Being able to iterate over the number of devices as a variable makes the test cases generic and reduces space complexity. Those <cite>number of CPUs</cite> can be set within <code class="docutils literal"><span class="pre">tests/000_global_setup.robot</span></code>. Again using tags those variables can be done board specific.</p>
 </div>
 </div>
 
