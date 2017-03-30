@@ -10,6 +10,7 @@ Contents:
     target/index
     yocto/index
     crossdev/index
+    devtools/index
     integration-tests/index
     common_tasks/index
 
