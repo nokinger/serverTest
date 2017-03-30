@@ -75,7 +75,7 @@ A basic callgrind option is given with ``--callgrind-out-file=<file>``
 Sometimes it is interesting to turn on profiling only in a certain part of a program. Therefor callgrind offers two possibilites to influence the data collection.
 1. Callgrind delivers ``callgrind_control`` as a program to control the profiling via commandline while profiling is running. 
 	To start a program without profiling and turning it on later start callgind with callgrind option ``--instr-atstart=no`` and use ``callgrind_control -i on`` when you think it makes sense	
-2. Callgrind delivers a header file ``callgrind.h``. There are several makros like ``CALLGRIND_TOGGLE_COLLECT``defined which control the data collection of a running callgrind instance.
+2. Callgrind delivers a header file ``callgrind.h``. There are several makros like ``CALLGRIND_TOGGLE_COLLECT``defined which control the data collection of a running callgrind instance. These can be used within your program.
 
 
 **Graphical evaluation**
