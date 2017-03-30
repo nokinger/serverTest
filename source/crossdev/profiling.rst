@@ -10,7 +10,7 @@ Some of them can like memcheck be used within a ``Continous Integration`` setup 
 1. **Memcheck** is a memory error detector, which helps you to make your programs, particularly those written in C and C++, more correct.
 2. **Callgrind** is a call-graph generating cache profiler. It helps you make your programs run faster.
 
-In the following sections basic usage example for **Memcheck** and **Callgrind** are given.
+Valgrind is already installed on the target.
 
 .. _memcheck:
 
@@ -28,6 +28,8 @@ Memcheck is a memory error detector. It can detect the following problems that a
 
 Problems like these can be difficult to find by other means, often remaining undetected for long periods, then causing occasional, difficult-to-diagnose crashes.
 
+**Executing**
+
 To receive readable outputs by memcheck the program to examine needs debug symbols, which means you should ``BUILD_TYPE DEBUG``.
 The basic way of calling memcheck to check your program is 
 	
@@ -35,8 +37,24 @@ The basic way of calling memcheck to check your program is
 
 Often the default options are sufficient, though, there are occasions where modifying them is useful. A basic option you should use is ``--unw-stack-scan-thresh=5`` which gives the depth of a stack-trace.
 
-A complete reference for options and to understand memcheck reports is given at [Memcheck Reference](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.options ).
+A complete reference for options and to understand memcheck reports is given at [Memcheck Reference](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.options ) and 
+[valgrind core](http://valgrind.org/docs/manual/manual-core.html "Valgrind Core Reference")
 
+There you will find 
+
+* Explanation of error messages from Memcheck
+* Memcheck Command-Line Options
+* Suppressing Output
+* Memcheck Monitor Commands (Valgrind + gdb-server)
+
+**Graphical evaluation**
+
+The valgrind developers also develop the program valkyrie, which is capable of visualizing the output of a testrun. To use valkyrie you must
+
+* sudo apt-get install valkyrie
+* run valgrind with options ``--xml=yes --xml-file=<FILENAME>``
+* use (i.e.) scp to get ``<FILENAME>`` on your computer
+* run ``valkyrie -l <FILENAME>``
 
 .. _callgrind:
 
@@ -49,5 +67,7 @@ Callgrind
 Integration in Jenkins 
 ======================
 
-[Memcheck Reference](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.options )
-[ein Beispiel](http://valgrind.org/docs/manual/manual-core.html "Valgrind Core Reference")
+For integration test with jenkins a plugin has been published which uses valgrind's memcheck. This plugin can be configured like a manually used valgrind session. The core feature is that a build can be marked as unstable/failed if a confiruable amount of memory leaks or other errors is found within the tested program.
+
+A complete description is given [at](https://plugins.jenkins.io/valgrind).
+
