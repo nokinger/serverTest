@@ -1,8 +1,8 @@
 .. _valgrind:
 
-********
-Valgrind
-********
+***********************
+Profiling with Valgrind
+***********************
 
 Valgrind is an instrumentation framework for building dynamic analysis tools. It comes with a set of tools each of which performs some kind of debugging, profiling, or similar task that helps you improve your programs. All of those programs are called via ``valgrind --tool=<TOOL>``.
 Some of them can like memcheck be used within a ``Continous Integration`` setup :ref:`valgrind_jenkins`. The most often important tools and in this project used tools are
