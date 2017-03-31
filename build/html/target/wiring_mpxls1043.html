@@ -144,7 +144,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/target/wiring_mpxls1043.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/target/wiring_mpxls1043.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -173,7 +173,7 @@ development host through ssh or serial console (COM1). The peripheral interfaces
 <p>Make sure your target-board and development host are on the same network and can ping
 each other. As a default the target-board uses DHCP to get an IP address.</p>
 <p>To verify your connection try to login to the target-board via SSH from your host:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ssh root@TARGET-IP
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ssh root@TARGET-IP
 </pre></div>
 </div>
 <div class="admonition note">
@@ -186,7 +186,7 @@ for the root-user.</p>
 </div>
 <div class="section" id="install-required-software-on-your-dev-host">
 <h2>1.2.2. Install required software on your dev-host<a class="headerlink" href="#install-required-software-on-your-dev-host" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo apt-get install picocom
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install picocom
 </pre></div>
 </div>
 </div>
@@ -197,7 +197,7 @@ for the root-user.</p>
 <div class="section" id="booting-the-board-first-version">
 <h2>1.2.4. Booting the board (First Version)<a class="headerlink" href="#booting-the-board-first-version" title="Permalink to this headline">¶</a></h2>
 <p>After connecting the board run <code class="docutils literal"><span class="pre">picocom</span></code> and power on the board. Since no automatic booting is supported for first evaluation steps of the board, you have to set the boot environment variables like this. It needs to be done only once per device.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">setenv dtbfile devicetree-Image-mpxls1043.dtb</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">setenv dtbfile devicetree-Image-mpxls1043.dtb</span>
 <span class="go">setenv bootargs.sd root=/dev/mmcblk0p2 rootfstype=ext4 rootflags=data=journal rw console=ttyS0,115200 rootwait</span>
 <span class="go">setenv sdbootPre1 ext2load mmc 0:2 0x81000000 /boot/${dtbfile}</span>
 <span class="go">setenv sdbootPre2 ext2load mmc 0:2 0x82000000 /boot/uImage</span>
@@ -208,7 +208,7 @@ for the root-user.</p>
 </pre></div>
 </div>
 <p>If everything worked fine something like</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">Saving Environment to NAND...</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Saving Environment to NAND...</span>
 <span class="go">Erasing NAND...</span>
 <span class="go">Erasing at 0x100000 -- 100% complete.</span>
 <span class="go">Writing to NAND... OK</span>
@@ -216,7 +216,7 @@ for the root-user.</p>
 </div>
 <p>Should be written on the console. As last command execute <code class="docutils literal"><span class="pre">reset</span></code>.</p>
 <p>By default the bootdelay between bootloader and kernel is set to 5s. To set another, shorter bootdelay, execute the commands</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">setenv bootdelay 2</span>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">setenv bootdelay 2</span>
 <span class="go">saveenv</span>
 </pre></div>
 </div>
