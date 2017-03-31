@@ -4,9 +4,9 @@
 Profiling with Valgrind
 ***********************
 
-Valgrind is an instrumentation framework for building dynamic analysis tools. It comes with a set of tools each of which performs some kind of debugging, profiling, or similar task that helps you improve your programs. All of those programs are called via ``valgrind --tool=<TOOL>``.
-Some of them can like memcheck be used within a ``Continuous Integration`` setup :ref:`valgrind_jenkins`. The most often important tools and in this project used tools are
-
+Valgrind is an instrumentation framework for building dynamic analysis tools. It comes with a set of tools each of which performs some kind of debugging, profiling, or similar task that helps you improve your programs. All programs provided by the valgrind framework are called via ``valgrind --tool=<TOOL>``.
+Some of them, like memcheck, can be used within a ``Continuous Integration`` setup. More information about that can be found here :ref:`valgrind_jenkins`. 
+The most often important tools and in this project used tools are
 1. **Memcheck** is a memory error detector, which helps you to make your programs, particularly those written in C and C++, more correct.
 2. **Callgrind** is a call-graph generating cache profiler. It helps you make your programs run faster.
 
@@ -30,12 +30,12 @@ Problems like these can be difficult to find by other means, often remaining und
 
 **Executing**
 
-To receive readable outputs by memcheck the program to examine needs debug symbols, which means you should ``BUILD_TYPE DEBUG``.
+To receive readable outputs by memcheck the program to examine needs debug symbols and a reduced optimisation (-O1 or -O). The easiest way to achieve this is building your program with ``BUILD_TYPE Profiling``.
 The basic way of calling memcheck to check your program is 
 	
 	valgrind --tool=memcheck <VALGRIND-OPTIONS> <PATH-TO-PROGRAM> <PROGRAM-OPTIONS>
 
-Often the default options are sufficient, though, there are occasions where modifying them is useful. A basic option you should use is ``--unw-stack-scan-thresh=5`` which gives the depth of a stack-trace.
+Often the default options are sufficient, though, there are occasions where modifying them is useful. A basic option you should use is ``--unw-stack-scan-thresh=X`` where ``X`` gives the depth of a stack-trace.
 
 A complete reference for options and to understand memcheck reports is given at [Memcheck Reference](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.options ) and 
 [valgrind core](http://valgrind.org/docs/manual/manual-core.html "Valgrind Core Reference")
