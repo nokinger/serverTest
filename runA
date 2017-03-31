@@ -1,0 +1,56 @@
+valgrind-listener started at Thu Mar 30 15:29:10 2017
+
+(1) -------------------- CONNECT --------------------
+(1)
+(1) <?xml version="1.0"?>
+(1) 
+(1) <valgrindoutput>
+(1) 
+(1) <protocolversion>4</protocolversion>
+(1) <protocoltool>memcheck</protocoltool>
+(1) 
+(1) <preamble>
+(1)   <line>Memcheck, a memory error detector</line>
+(1)   <line>Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.</line>
+(1)   <line>Using Valgrind-3.10.0 and LibVEX; rerun with -h for copyright info</line>
+(1)   <line>Command: ./sca-cmake-example</line>
+(1) </preamble>
+(1) 
+(1) <pid>23104</pid>
+(1) <ppid>18815</ppid>
+(1) <tool>memcheck</tool>
+(1) 
+(1) <args>
+(1)   <vargv>
+(1)     <exe>/usr/bin/valgrind.bin</exe>
+(1)     <arg>--xml=yes</arg>
+(1)     <arg>--xml-socket=192.168.120.112</arg>
+(1)   </vargv>
+(1)   <argv>
+(1)     <exe>./sca-cmake-example</exe>
+(1)   </argv>
+(1) </args>
+(1) 
+(1) <status>
+(1)   <state>RUNNING</state>
+(1)   <time>00:00:00:01.619 </time>
+(1) </status>
+(1) 
+(1) 
+(1) <status>
+(1)   <state>FINISHED</state>
+(1)   <time>00:00:00:11.882 </time>
+(1) </status>
+(1) 
+(1) <errorcounts>
+(1) </errorcounts>
+(1) 
+(1) <suppcounts>
+(1) </suppcounts>
+(1) 
+(1) </valgrindoutput>
+(1) 
+(1) 
+(0) ------------------- DISCONNECT -------------------
+(0)
+(0) valgrind-listener exited at Thu Mar 30 15:29:28 2017

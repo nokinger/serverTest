@@ -150,7 +150,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../../_sources/integration-tests/app_carrier_test_rig/test_gateway.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/integration-tests/app_carrier_test_rig/test_gateway.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -172,7 +172,7 @@
 </li>
 <li><p class="first">Copy the image to a microSD card:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo dd <span class="k">if</span><span class="o">=</span>/path/to/image <span class="nv">of</span><span class="o">=</span>/device/name <span class="nv">bs</span><span class="o">=</span>100M
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo dd <span class="k">if</span><span class="o">=</span>/path/to/image <span class="nv">of</span><span class="o">=</span>/device/name <span class="nv">bs</span><span class="o">=</span>100M
 </pre></div>
 </div>
 </div></blockquote>
@@ -184,7 +184,7 @@
 <div><ul>
 <li><p class="first"><em>Minibian</em> installation does not automatically expand partitions. It can be done by installing and running <code class="docutils literal"><span class="pre">raspi-config</span></code>:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> apt-get install raspi-config
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install raspi-config
 </pre></div>
 </div>
 </div></blockquote>
@@ -193,7 +193,7 @@
 </li>
 <li><p class="first">There is no utility pre-installed to change keyboard layout. To set the keyboard layout of your choice, install <strong>console-data</strong> and choose the correct layout during installation:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> apt-get install console-data
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install console-data
 </pre></div>
 </div>
 </div></blockquote>
@@ -207,31 +207,39 @@
 </div>
 <div class="section" id="installing-required-software">
 <h3>4.3.2.1.2. Installing Required Software:<a class="headerlink" href="#installing-required-software" title="Permalink to this headline">¶</a></h3>
+<p>Use <a class="reference download internal" href="../../_downloads/installPrograms.sh" download=""><code class="xref download docutils literal"><span class="pre">this</span></code></a> script to install needed programs or execute the following steps manually.</p>
 <ul>
 <li><p class="first">Install <strong>curl</strong>, which is a requirement for Docker installation:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> apt-get install curl
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install curl
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Install <strong>Docker</strong>:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> curl -sSL get.docker.com <span class="p">|</span> sh
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -sSL get.docker.com <span class="p">|</span> sh
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Install <strong>dnsmasq</strong> for running a private network:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> apt-get install dnsmasq
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install dnsmasq
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Install <strong>UncomplicatedFirewall</strong> for logging on to the test target by using port forwarding:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> apt-get install ufw
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install ufw
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Install <strong>misc-programs</strong> for test automation:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install libftdi-dev
 </pre></div>
 </div>
 </div></blockquote>
@@ -247,7 +255,7 @@
 <ul>
 <li><p class="first">Assign a static IP address to Raspberry Pi&#8217;s <strong>eth0</strong> interface. The <code class="docutils literal"><span class="pre">/etc/network/interfaces</span></code> file should look similar to this:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="go">auto lo</span>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">auto lo</span>
 <span class="go">iface lo inet loopback</span>
 
 <span class="go">auto eth0</span>
@@ -263,14 +271,14 @@
 </li>
 <li><p class="first">Restart networking daemon and ensure eth0 indeed has the IP addredd:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> systemctl restart networking
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> systemctl restart networking
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Set up DHCP server with minimal configuration. Edit the <code class="docutils literal"><span class="pre">/etc/dnsmasq.conf</span></code> file to have only the following settings:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="go">interface=eth0</span>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">interface=eth0</span>
 <span class="go">no-resolv</span>
 <span class="go">log-dhcp</span>
 <span class="go">dhcp-range=10.1.1.100,10.1.1.150,60s</span>
@@ -284,7 +292,7 @@
 </li>
 <li><p class="first">Restart dnsmasq daemon and verify that the interfaces indeed have been assigned known IP addresses:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> systemctl restart dnsmasq
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> systemctl restart dnsmasq
 </pre></div>
 </div>
 </div></blockquote>
@@ -304,7 +312,7 @@
 </li>
 <li><p class="first">Add the following line at the bottom of <code class="docutils literal"><span class="pre">/root/.bashrc</span></code> and reload it:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="go">echo 1 | sudo tee /proc/sys/net/ipv4/conf/eth0/route_localnet &amp;&gt;/dev/null</span>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">echo 1 | sudo tee /proc/sys/net/ipv4/conf/eth0/route_localnet &amp;&gt;/dev/null</span>
 <span class="go">source /root/.bashrc</span>
 </pre></div>
 </div>
@@ -312,7 +320,7 @@
 </li>
 <li><p class="first">Add the following lines at the bottom of <code class="docutils literal"><span class="pre">etc/ufw/before.rules</span></code> (immediately after a COMMIT statement):</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="go">*nat</span>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">*nat</span>
 <span class="go">:PREROUTING ACCEPT [0:0]</span>
 <span class="go">:POSTROUTING ACCEPT [0:0]</span>
 
@@ -327,7 +335,7 @@
 </li>
 <li><p class="first">Restart <strong>UncomplicatedFirewall</strong>:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ufw disable
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ufw disable
 <span class="gp">$</span> ufw <span class="nb">enable</span>
 </pre></div>
 </div>
@@ -335,7 +343,7 @@
 </li>
 <li><p class="first">Now it should be possible to log in to the test target:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> From the Raspberry Pi
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> From the Raspberry Pi
 <span class="gp">$</span> ssh root@localhost -p 9022
 <span class="gp">#</span> From another node in the network
 <span class="gp">$</span> ssh root@sca-app-carrier-board-test-gw -p 9022
@@ -353,28 +361,28 @@
 <ul>
 <li><p class="first">Add your private keys to the <em>SSH Authentication Agent</em>:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ssh-add ~/.ssh
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ssh-add ~/.ssh
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Login to the Raspberry Pi with forwarding to <em>SSH Authentication Agent</em>:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ssh -A root@hostname
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ssh -A root@hostname
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Create a directory under <code class="docutils literal"><span class="pre">/home</span></code> named after your uniquely recognisable username:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> mkdir -p ~/&lt;username&gt;
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir -p ~/&lt;username&gt;
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Clone the necessary Git repository there:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> git clone &lt;url&gt; ~/&lt;username&gt;/&lt;dirname&gt;
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone &lt;url&gt; ~/&lt;username&gt;/&lt;dirname&gt;
 </pre></div>
 </div>
 </div></blockquote>
@@ -388,7 +396,7 @@
 <ul>
 <li><p class="first">Add a user named <strong>jenkins</strong> with its own home directory:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> adduser jenkins
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> adduser jenkins
 </pre></div>
 </div>
 </div></blockquote>
@@ -397,7 +405,7 @@
 </li>
 <li><p class="first">Install JDK. Depending on your choice of distribution, this might not be necessary. If it is:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> apt-get install oracle-java8-jdk
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install oracle-java8-jdk
 </pre></div>
 </div>
 </div></blockquote>
@@ -417,28 +425,28 @@
 </li>
 <li><p class="first">Add the user <code class="docutils literal"><span class="pre">jenkins</span></code> to the group <code class="docutils literal"><span class="pre">docker</span></code>:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> usermod -a -G docker jenkins
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> usermod -a -G docker jenkins
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Install <code class="docutils literal"><span class="pre">sudo</span></code> on the test host if it is not present already:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> apt-get install sudo
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install sudo
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">Install any other utilities necessary for running the pipeline script as user <code class="docutils literal"><span class="pre">jenkins</span></code> on the <code class="docutils literal"><span class="pre">sca-test-host</span></code>:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> apt-get install pv lsof
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get install pv lsof
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">After the package <code class="docutils literal"><span class="pre">sudo</span></code> has been installed, the file <code class="docutils literal"><span class="pre">/etc/sudoers</span></code> will be available. Add permissions for the jenkins user to run certain commands as necessary for the pipeline script:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">echo</span> <span class="s1">&#39;$USER ALL= NOPASSWD: /bin/dd&#39;</span> &gt;&gt; /etc/sudoers<span class="s2">&quot;</span>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">echo</span> <span class="s1">&#39;$USER ALL= NOPASSWD: /bin/dd&#39;</span> &gt;&gt; /etc/sudoers<span class="s2">&quot;</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -451,7 +459,7 @@
 </li>
 <li><p class="first">Add a build script. It must be ensured that <code class="docutils literal"><span class="pre">docker</span> <span class="pre">exec</span></code> commands are NOT run from this script with <code class="docutils literal"><span class="pre">--interactive</span></code> argument. A working example has been provided below:</p>
 <blockquote>
-<div><div class="highlight-groovy"><div class="highlight"><pre><span class="c1">// This script requires the Jenkins node &#39;sca-test-host&#39; to have the console utility &#39;pipe view&#39;</span>
+<div><div class="highlight-groovy"><div class="highlight"><pre><span></span><span class="c1">// This script requires the Jenkins node &#39;sca-test-host&#39; to have the console utility &#39;pipe view&#39;</span>
 <span class="c1">// It can be installed with the following command:</span>
 <span class="c1">//     apt-get install pv</span>
 
