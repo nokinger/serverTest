@@ -41,6 +41,9 @@ _____________________
 Installing Required Software:
 _____________________________
 
+Use :download:`this <./installPrograms.sh>` script to install needed programs or execute the following steps manually.
+
+
 - Install **curl**, which is a requirement for Docker installation:
 
     .. code-block:: console
@@ -64,6 +67,13 @@ _____________________________
     .. code-block:: console
 
         $ apt-get install ufw
+
+- Install **misc-programs** for test automation:
+
+    .. code-block:: console
+
+        $ apt-get install libftdi-dev
+
 
 Configuring the DHCP Server:
 ____________________________

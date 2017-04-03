@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.6. Profiling with Valgrind &mdash; SCA Buildsystem 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="SCA Buildsystem 1.0.0 documentation" href="../index.html"/>
+        <link rel="up" title="3. (Cross-) Application Development" href="index.html"/>
+        <link rel="next" title="4. Integration Tests" href="../integration-tests/index.html"/>
+        <link rel="prev" title="3.5. Remote Debugging Applications with CLion" href="remote_debug_clion.html"/>
+    <script src="../_static/tty-player/webcomponents-lite.min.js"></script>
+    <link href="../_static/tty-player/tty-player.css" rel="stylesheet"></link>
+    <script src="../_static/tty-player/term.js"></script>
+    <script src="../_static/tty-player/tty-player.js"></script>
+     
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> SCA Buildsystem
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../target/index.html">1. Target Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yocto/index.html">2. The Yocto Buildsystem</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. (Cross-) Application Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devhost.html">3.1. Setup your host for development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="target.html">3.2. Setup your target-board for development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build.html">3.3. Building the application-controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rt_hints.html">3.4. Hints on programming rt-applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_debug_clion.html">3.5. Remote Debugging Applications with CLion</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.6. Profiling with Valgrind</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memcheck">3.6.1. Memcheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#callgrind">3.6.2. Callgrind</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integration-in-jenkins">3.6.3. Integration in Jenkins</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../integration-tests/index.html">4. Integration Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common_tasks/index.html">5. Common Tasks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">SCA Buildsystem</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">3. (Cross-) Application Development</a> &raquo;</li>
+      
+    <li>3.6. Profiling with Valgrind</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/crossdev/profiling.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="profiling-with-valgrind">
+<span id="valgrind"></span><h1>3.6. Profiling with Valgrind<a class="headerlink" href="#profiling-with-valgrind" title="Permalink to this headline">¶</a></h1>
+<p>Valgrind is an instrumentation framework for building dynamic analysis tools. It comes with a set of tools, each of which performs some kind of debugging, profiling, or similar task that helps you improve your programs. All programs provided by the valgrind framework are called via <code class="docutils literal"><span class="pre">valgrind</span> <span class="pre">--tool=&lt;TOOL&gt;</span></code>.
+Some of them, like memcheck, can be used within a <code class="docutils literal"><span class="pre">Continuous</span> <span class="pre">Integration</span></code> setup. More information about that can be found here: <a class="reference internal" href="#valgrind-jenkins"><span class="std std-ref">Integration in Jenkins</span></a>.
+The most frequently used tools in this project are:</p>
+<ol class="arabic simple">
+<li><strong>Memcheck</strong> is a memory error detector, which helps you to make your programs, particularly those written in C and C++, more correct.</li>
+<li><strong>Callgrind</strong> is a call-graph generating cache profiler. It helps you make your programs run faster.</li>
+</ol>
+<p>Valgrind is already installed on the target.</p>
+<div class="section" id="memcheck">
+<span id="id1"></span><h2>3.6.1. Memcheck<a class="headerlink" href="#memcheck" title="Permalink to this headline">¶</a></h2>
+<p>Memcheck is a memory error detector. It can detect the following problems that are common in C and C++ programs.</p>
+<ul class="simple">
+<li>Accessing memory you shouldn&#8217;t, e.g., overrunning and underrunning heap blocks, overrunning the top of the stack, and accessing memory after it has been freed.</li>
+<li>Using undefined values, i.e., values that have not been initialised, or that have been derived from other undefined values</li>
+<li>Incorrect freeing of heap memory, such as double-freeing heap blocks, or mismatched use of <code class="docutils literal"><span class="pre">malloc/new/new[]</span></code> versus <code class="docutils literal"><span class="pre">free/delete/delete[]</span></code></li>
+<li>Overlapping src and dst pointers in memcpy and related functions.</li>
+<li>Passing a fishy (presumably negative) value to the size parameter of a memory allocation function.</li>
+<li>Memory leaks.</li>
+</ul>
+<p>Problems like these can be difficult to find by other means, often remaining undetected for long periods, then causing occasional, difficult-to-diagnose crashes.</p>
+<p><strong>Executing</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To receive readable outputs by memcheck the program to examine needs debug symbols and a reduced optimisation (-O1). The easiest way to achieve this is building your program with <code class="docutils literal"><span class="pre">BUILD_TYPE</span> <span class="pre">Profiling</span></code>.</p>
+</div>
+<p>The basic way of calling memcheck to check your program is:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">valgrind --tool=memcheck &lt;VALGRIND-OPTIONS&gt; &lt;PATH-TO-PROGRAM&gt; &lt;PROGRAM-OPTIONS&gt;</span>
+</pre></div>
+</div>
+<p>Often the default options are sufficient, though, there are occasions where modifying them is useful. A basic option you should use is <code class="docutils literal"><span class="pre">--unw-stack-scan-thresh=X</span></code>, where <code class="docutils literal"><span class="pre">X</span></code> gives the depth of a stack-trace.</p>
+<p>A complete reference for options and to understand memcheck reports is given at <a class="reference external" href="http://valgrind.org/docs/manual/mc-manual.html#mc-manual.options">Memcheck Reference</a>. And
+<a class="reference external" href="http://valgrind.org/docs/manual/manual-core.html">valgrind core</a>.</p>
+<p>There you will find</p>
+<ul class="simple">
+<li>Explanation of error messages from Memcheck</li>
+<li>Memcheck Command-Line Options</li>
+<li>Suppressing Output</li>
+<li>Memcheck Monitor Commands (Valgrind + gdb-server)</li>
+</ul>
+<p><strong>Graphical evaluation</strong></p>
+<p>The valgrind developers also develop the program valkyrie, which is capable of visualizing the output of a testrun. To use valkyrie you must:</p>
+<ul class="simple">
+<li>sudo apt-get install valkyrie</li>
+<li>run valgrind with options <code class="docutils literal"><span class="pre">--xml=yes</span> <span class="pre">--xml-file=&lt;FILENAME&gt;</span></code></li>
+<li>use (i.e.) scp to get <code class="docutils literal"><span class="pre">&lt;FILENAME&gt;</span></code> on your computer</li>
+<li>run <code class="docutils literal"><span class="pre">valkyrie</span> <span class="pre">-l</span> <span class="pre">&lt;FILENAME&gt;</span></code></li>
+</ul>
+</div>
+<div class="section" id="callgrind">
+<span id="id2"></span><h2>3.6.2. Callgrind<a class="headerlink" href="#callgrind" title="Permalink to this headline">¶</a></h2>
+<p>Callgrind is a profiling tool that records the call history among functions in a program&#8217;s run as a call-graph. By default, the collected data consists of the number of instructions executed, their relationship to source lines, the caller/callee relationship between functions, and the numbers of such calls. Optionally, cache simulation and/or branch prediction (similar to Cachegrind) can produce further information about the runtime behavior of an application.</p>
+<p><strong>Executing</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Your program should contain debug symbols. Again <code class="docutils literal"><span class="pre">BUILD_TYPE</span> <span class="pre">Profiling</span></code> is a good choice. Using a higher optimisation is possible, but has to be done manually by you.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">valgrind --tool=callgrind &lt;CALLGIND-OPTIONS&gt; &lt;YOUR-PROGRAM&gt; &lt;PROGRAM-OPTIONS&gt;</span>
+</pre></div>
+</div>
+<p>A basic callgrind option is given with <code class="docutils literal"><span class="pre">--callgrind-out-file=&lt;file&gt;</span></code></p>
+<p><strong>Controlling Profiled Sections</strong></p>
+<p>Sometimes it is interesting to turn on profiling only in a certain part of a program. Therefor callgrind offers two possibilites to influence the data collection.</p>
+<ol class="arabic simple">
+<li>Callgrind delivers <strong>callgrind_control</strong> as a program to control the profiling via commandline while profiling is running. To start a program without profiling and turning it on later start callgind with callgrind option <code class="docutils literal"><span class="pre">--instr-atstart=no</span></code> and use <code class="docutils literal"><span class="pre">callgrind_control</span> <span class="pre">-i</span> <span class="pre">on</span></code> when you think it makes sense.</li>
+<li>Callgrind delivers a header file <code class="docutils literal"><span class="pre">callgrind.h</span></code>. There are several macros like <code class="docutils literal"><span class="pre">CALLGRIND_TOGGLE_COLLECT</span></code> defined which control the data collection of a running callgrind instance. These can be used within your program.</li>
+</ol>
+<p><strong>Graphical evaluation</strong>
+As graphical evaluation tool, <code class="docutils literal"><span class="pre">kcachegrind</span></code> is highly recommended.
+Usage on your computer:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">kcachegrind ``&lt;RESULT-FILE&gt;``</span>
+</pre></div>
+</div>
+<p>A comprehensive reference to callgrind is given at <a class="reference external" href="http://valgrind.org/docs/manual/cl-manual.html">callgrind</a>.</p>
+</div>
+<div class="section" id="integration-in-jenkins">
+<span id="valgrind-jenkins"></span><h2>3.6.3. Integration in Jenkins<a class="headerlink" href="#integration-in-jenkins" title="Permalink to this headline">¶</a></h2>
+<p>For integration test with Jenkins, a plugin has been published which uses valgrind&#8217;s memcheck. This plugin can be configured like a manually used valgrind session. The core feature is that a build can be marked as unstable/failed if a configurable amount of memory leaks or other errors is found within the tested program.</p>
+<p>A complete description is given <a class="reference external" href="https://plugins.jenkins.io/valgrind">here</a>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../integration-tests/index.html" class="btn btn-neutral float-right" title="4. Integration Tests" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="remote_debug_clion.html" class="btn btn-neutral" title="3.5. Remote Debugging Applications with CLion" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, SCA Schuckert GmbH.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -105,6 +105,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="remote_debug_clion.html">3.5. Remote Debugging Applications with CLion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling.html">3.6. Profiling with Valgrind</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../integration-tests/index.html">4. Integration Tests</a></li>
@@ -145,7 +146,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/crossdev/rt_hints.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/crossdev/rt_hints.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,7 +178,7 @@ pausing periodically for 500 microseconds. It measures the time before pausing, 
 pausing and calculates the difference between the desired 500 microseconds sleep and
 the actual real sleep. In the end the minimal and the maximum latency is printed on the
 commandline.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
 <span class="p">{</span>
     <span class="n">CyclictestRunner</span>    <span class="n">t1</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">microseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span><span class="n">SchedPolicy</span><span class="o">::</span><span class="n">RR</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="n">CPUAffinity</span><span class="o">::</span><span class="n">CPU1</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
     <span class="n">t1</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
@@ -276,7 +277,7 @@ Another aspect is that when creating a new thread new memory will be allocated f
 thread administration. These allocations will result in new page faults too. Therefore all threads need
 to be created at startup time, before RT show time. This can be done by allocating and touching the
 later needed process memory at program start. An example is given by the next code snippet.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#define PROCESS_MEMORY  some_useful_value</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#define PROCESS_MEMORY  some_useful_value</span>
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span><span class="o">**</span><span class="n">argv</span><span class="p">[]){</span>
     <span class="n">buffer</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">malloc</span><span class="p">(</span><span class="n">PROCESS_MEMORY</span><span class="p">));</span>
 
@@ -388,7 +389,7 @@ later needed process memory at program start. An example is given by the next co
 not receive that thread by the scheduler. A thread has by default no cpu-affinity. It can
 be set at any time, but best at the beginning, by using <code class="docutils literal"><span class="pre">sched_setaffinity</span></code> which
 might be used like this:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="kt">cpu_set_t</span> <span class="n">cpu_mask</span><span class="p">;</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">cpu_set_t</span> <span class="n">cpu_mask</span><span class="p">;</span>
 <span class="n">CPU_ZERO</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">cpu_mask</span> <span class="p">);</span>
 <span class="n">CPU_SET</span><span class="p">(</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">mCpu</span> <span class="p">)</span> <span class="p">,</span> <span class="o">&amp;</span><span class="n">cpu_mask</span> <span class="p">);</span>
 

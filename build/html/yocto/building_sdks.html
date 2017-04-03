@@ -143,7 +143,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/yocto/building_sdks.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/yocto/building_sdks.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -167,24 +167,24 @@
 <li>A Toolchain is always build for a specific image and contains all libraries installed in that image</li>
 <li>First build the toolchain with Yocto:</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
 <span class="gp">$</span> ./tools/run_in_container.sh CONTAINER ./tools/build/bitbake.sh ./build/BUILDCONFIG none IMAGE -c populate_sdk
 </pre></div>
 </div>
 <p>To generate the <code class="docutils literal"><span class="pre">enterprise-sdk</span></code> for the <code class="docutils literal"><span class="pre">application-carrier-board</span></code> run:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
 <span class="gp">$</span> ./tools/run_in_container.sh build ./tools/build/bitbake.sh ./build/app-carrier-board none sca-enterprise-image -c populate_sdk
 </pre></div>
 </div>
 <ul class="simple">
 <li>Afterwards generate a Debian-Package for the generated SDK:</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
 <span class="gp">$</span> ./tools/build/make_sca_<span class="o">[</span>enterprise<span class="p">|</span>sys6000<span class="p">|</span>asc5000<span class="o">]</span>_sdk.sh ./build/BUILDCONFIG
 </pre></div>
 </div>
 <p>To generate a debian-package of the <code class="docutils literal"><span class="pre">enterprise-sdk</span></code> for the <code class="docutils literal"><span class="pre">application-carrier-board</span></code> run:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/projects/sca-os
 <span class="gp">$</span> ./tools/build/make_sca_enterprise_sdk.sh ./build/app-carrier-board
 </pre></div>
 </div>
@@ -197,7 +197,7 @@
 <ul class="simple">
 <li>Copy the generated debian-package for the SDK you want to a developer host and install it with <code class="docutils literal"><span class="pre">dpkg</span></code> (e.g. the enterprise-sdk):</li>
 </ul>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> dpkg -i sca-enterprise-sdk-app-carrier-board_2.1.1-1.0.0_amd64.deb
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> dpkg -i sca-enterprise-sdk-app-carrier-board_2.1.1-1.0.0_amd64.deb
 </pre></div>
 </div>
 </div>

@@ -145,7 +145,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/integration-tests/running_tests.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/integration-tests/running_tests.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -166,13 +166,13 @@
 <div class="section" id="running-the-tests">
 <h2>4.2.2. Running the Tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h2>
 <p>Get the source:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> git clone git@DESVML02.dev.sca-solutions.com:ex.schapaa/integration-tests.git
-<span class="gp">$</span> <span class="nb">cd </span>integration-tests
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone git@DESVML02.dev.sca-solutions.com:ex.schapaa/integration-tests.git
+<span class="gp">$</span> <span class="nb">cd</span> integration-tests
 <span class="gp">$</span> git checkout -b develop
 </pre></div>
 </div>
 <p>Run the tests with the help of the provided script <code class="docutils literal"><span class="pre">./testrunner/run_in_container.sh</span></code>. An example for testing the <code class="docutils literal"><span class="pre">app_carrier_board</span></code> with the <code class="docutils literal"><span class="pre">enterprise</span></code> image from your local computer is given below.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ./testrunner/run_in_container.sh -i COMMAND ROBOT --variable TARGET_TYPE:app_carrier_board  --variable TEST_HOST:local --variable TARGET_IP:&lt;TARGET_IP&gt; --variable IMAGE_TYPE:enterprise
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./testrunner/run_in_container.sh -i COMMAND ROBOT --variable TARGET_TYPE:app_carrier_board  --variable TEST_HOST:local --variable TARGET_IP:&lt;TARGET_IP&gt; --variable IMAGE_TYPE:enterprise
 </pre></div>
 </div>
 <p>A detailed description is given within the script and an explanation of the used tagging structure in <a class="reference internal" href="#tagging-system"><span class="std std-ref">Tagging System</span></a>. Reading the description within the script is probably essential for further reading.</p>

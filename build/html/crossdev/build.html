@@ -108,6 +108,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="rt_hints.html">3.4. Hints on programming rt-applications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote_debug_clion.html">3.5. Remote Debugging Applications with CLion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling.html">3.6. Profiling with Valgrind</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../integration-tests/index.html">4. Integration Tests</a></li>
@@ -148,7 +149,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/crossdev/build.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/crossdev/build.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -166,9 +167,9 @@ the application you are working on.</p>
 <h2>3.3.1. Clone your the repository<a class="headerlink" href="#clone-your-the-repository" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">application-controller</span></code> will be used as an example here and it is assumed,
 that you have a folder <code class="docutils literal"><span class="pre">~/git</span></code> to manage all your git-repositories.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/git
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/git
 <span class="gp">$</span> git clone git@DESVML02.dev.sca-solutions.com:core-system/application-controller.git
-<span class="gp">$</span> <span class="nb">cd </span>application-controller
+<span class="gp">$</span> <span class="nb">cd</span> application-controller
 <span class="gp">$</span> git checkout -b cmake-project-structure
 </pre></div>
 </div>
@@ -179,8 +180,8 @@ that you have a folder <code class="docutils literal"><span class="pre">~/git</s
 file corresponding to your sdk and target-board.</p>
 <p>To generate a release-build using the <code class="docutils literal"><span class="pre">enterprise-sdk</span></code> for the <code class="docutils literal"><span class="pre">app-carrier-board</span></code> in
 the folder <code class="docutils literal"><span class="pre">build/release</span></code> run these commands from your toplevel source-directory:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> mkdir -p build/release
-<span class="gp">$</span> <span class="nb">cd </span>build/release
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir -p build/release
+<span class="gp">$</span> <span class="nb">cd</span> build/release
 <span class="gp">$</span> cmake -DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>../../Linux-sca_enterprise_image_sdk_gcc.cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release ../../
 </pre></div>
 </div>
@@ -215,7 +216,7 @@ Click OK to generate build configuration.</span></p>
 </div>
 <div class="section" id="build">
 <h2>3.3.4. Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd </span>build/release
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> build/release
 <span class="gp">$</span> make
 </pre></div>
 </div>
