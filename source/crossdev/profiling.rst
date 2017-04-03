@@ -4,9 +4,9 @@
 Profiling with Valgrind
 ***********************
 
-Valgrind is an instrumentation framework for building dynamic analysis tools. It comes with a set of tools each of which performs some kind of debugging, profiling, or similar task that helps you improve your programs. All programs provided by the valgrind framework are called via ``valgrind --tool=<TOOL>``.
-Some of them, like memcheck, can be used within a ``Continuous Integration`` setup. More information about that can be found here :ref:`valgrind_jenkins`. 
-The most often important tools and in this project used tools are
+Valgrind is an instrumentation framework for building dynamic analysis tools. It comes with a set of tools, each of which performs some kind of debugging, profiling, or similar task that helps you improve your programs. All programs provided by the valgrind framework are called via ``valgrind --tool=<TOOL>``.
+Some of them, like memcheck, can be used within a ``Continuous Integration`` setup. More information about that can be found here: :ref:`valgrind_jenkins`. 
+The most frequently used tools in this project are:
 
 1. **Memcheck** is a memory error detector, which helps you to make your programs, particularly those written in C and C++, more correct.
 2. **Callgrind** is a call-graph generating cache profiler. It helps you make your programs run faster.
@@ -20,8 +20,8 @@ Memcheck
 
 Memcheck is a memory error detector. It can detect the following problems that are common in C and C++ programs.
 
-* Accessing memory you shouldn't, e.g. overrunning and underrunning heap blocks, overrunning the top of the stack, and accessing memory after it has been freed.
-* Using undefined values, i.e. values that have not been initialised, or that have been derived from other undefined values
+* Accessing memory you shouldn't, e.g., overrunning and underrunning heap blocks, overrunning the top of the stack, and accessing memory after it has been freed.
+* Using undefined values, i.e., values that have not been initialised, or that have been derived from other undefined values
 * Incorrect freeing of heap memory, such as double-freeing heap blocks, or mismatched use of ``malloc/new/new[]`` versus ``free/delete/delete[]``
 * Overlapping src and dst pointers in memcpy and related functions.
 * Passing a fishy (presumably negative) value to the size parameter of a memory allocation function.
@@ -35,16 +35,16 @@ Problems like these can be difficult to find by other means, often remaining und
 	
 	To receive readable outputs by memcheck the program to examine needs debug symbols and a reduced optimisation (-O1). The easiest way to achieve this is building your program with ``BUILD_TYPE Profiling``.
 
-The basic way of calling memcheck to check your program is 
+The basic way of calling memcheck to check your program is: 
 
 .. code-block:: console
 	
 	valgrind --tool=memcheck <VALGRIND-OPTIONS> <PATH-TO-PROGRAM> <PROGRAM-OPTIONS>
 
-Often the default options are sufficient, though, there are occasions where modifying them is useful. A basic option you should use is ``--unw-stack-scan-thresh=X`` where ``X`` gives the depth of a stack-trace.
+Often the default options are sufficient, though, there are occasions where modifying them is useful. A basic option you should use is ``--unw-stack-scan-thresh=X``, where ``X`` gives the depth of a stack-trace.
 
-A complete reference for options and to understand memcheck reports is given at [Memcheck Reference](http://valgrind.org/docs/manual/mc-manual.html#mc-manual.options ) and 
-[valgrind core](http://valgrind.org/docs/manual/manual-core.html "Valgrind Core Reference")
+A complete reference for options and to understand memcheck reports is given at `Memcheck Reference <http://valgrind.org/docs/manual/mc-manual.html#mc-manual.options>`_. And 
+`valgrind core <http://valgrind.org/docs/manual/manual-core.html>`_.
 
 There you will find 
 
@@ -55,7 +55,7 @@ There you will find
 
 **Graphical evaluation**
 
-The valgrind developers also develop the program valkyrie, which is capable of visualizing the output of a testrun. To use valkyrie you must
+The valgrind developers also develop the program valkyrie, which is capable of visualizing the output of a testrun. To use valkyrie you must:
 
 * sudo apt-get install valkyrie
 * run valgrind with options ``--xml=yes --xml-file=<FILENAME>``
@@ -88,18 +88,18 @@ Sometimes it is interesting to turn on profiling only in a certain part of a pro
 
 1. Callgrind delivers **callgrind_control** as a program to control the profiling via commandline while profiling is running. To start a program without profiling and turning it on later start callgind with callgrind option ``--instr-atstart=no`` and use ``callgrind_control -i on`` when you think it makes sense.
 
-2. Callgrind delivers a header file ``callgrind.h``. There are several makros like ``CALLGRIND_TOGGLE_COLLECT`` defined which control the data collection of a running callgrind instance. These can be used within your program.
+2. Callgrind delivers a header file ``callgrind.h``. There are several macros like ``CALLGRIND_TOGGLE_COLLECT`` defined which control the data collection of a running callgrind instance. These can be used within your program.
 
 
 **Graphical evaluation**
-As graphical evaluation tool ``kcachegrind`` heavily recommended. 
+As graphical evaluation tool, ``kcachegrind`` is highly recommended. 
 Usage on your computer:
 
 .. code-block:: console
 
 	kcachegrind ``<RESULT-FILE>``
 
-A comprehensive reference to callgrind is given at [callgrind](http://valgrind.org/docs/manual/cl-manual.html)
+A comprehensive reference to callgrind is given at `callgrind <http://valgrind.org/docs/manual/cl-manual.html>`_.
 
 
 .. _valgrind_jenkins:
@@ -107,7 +107,7 @@ A comprehensive reference to callgrind is given at [callgrind](http://valgrind.o
 Integration in Jenkins 
 ======================
 
-For integration test with jenkins a plugin has been published which uses valgrind's memcheck. This plugin can be configured like a manually used valgrind session. The core feature is that a build can be marked as unstable/failed if a confiruable amount of memory leaks or other errors is found within the tested program.
+For integration test with Jenkins, a plugin has been published which uses valgrind's memcheck. This plugin can be configured like a manually used valgrind session. The core feature is that a build can be marked as unstable/failed if a configurable amount of memory leaks or other errors is found within the tested program.
 
-A complete description is given [at](https://plugins.jenkins.io/valgrind).
+A complete description is given `here <https://plugins.jenkins.io/valgrind>`_.
 
