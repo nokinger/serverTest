@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.3. Building SDKs &mdash; SCA Buildsystem 1.0.0 documentation</title>
+  <title>2.4. Building SDKs &mdash; SCA Buildsystem 1.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -36,7 +38,7 @@
     <link rel="top" title="SCA Buildsystem 1.0.0 documentation" href="../index.html"/>
         <link rel="up" title="2. The Yocto Buildsystem" href="index.html"/>
         <link rel="next" title="3. (Cross-) Application Development" href="../crossdev/index.html"/>
-        <link rel="prev" title="2.2. Building Images" href="building_images.html"/>
+        <link rel="prev" title="2.3. Building Images" href="building_images.html"/>
     <script src="../_static/tty-player/webcomponents-lite.min.js"></script>
     <link href="../_static/tty-player/tty-player.css" rel="stylesheet"></link>
     <script src="../_static/tty-player/term.js"></script>
@@ -51,6 +53,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -91,15 +94,19 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../target/index.html">1. Target Systems</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">2. The Yocto Buildsystem</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">2.1. Yocto Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="building_images.html">2.2. Building Images</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Building SDKs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#prerequisites">2.3.1. Prerequisites</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#building-a-sdk-toolchain">2.3.2. Building a SDK (toolchain)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#installing-an-sdk-to-a-developer-host">2.3.3. Installing an SDK to a developer host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_programs.html">2.2. Installing Programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building_images.html">2.3. Building Images</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.4. Building SDKs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">2.4.1. Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-a-sdk-toolchain">2.4.2. Building a SDK (toolchain)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-an-sdk-to-a-developer-host">2.4.3. Installing an SDK to a developer host</a></li>
 </ul>
 </li>
 </ul>
@@ -119,8 +126,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">SCA Buildsystem</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SCA Buildsystem</a>
+        
       </nav>
 
 
@@ -129,40 +138,57 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="index.html">2. The Yocto Buildsystem</a> &raquo;</li>
-      
-    <li>2.3. Building SDKs</li>
+        
+      <li>2.4. Building SDKs</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../_sources/yocto/building_sdks.txt" rel="nofollow"> View page source</a>
+            
+            <a href="../_sources/yocto/building_sdks.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="section" id="building-sdks">
-<h1>2.3. Building SDKs<a class="headerlink" href="#building-sdks" title="Permalink to this headline">¶</a></h1>
+<h1>2.4. Building SDKs<a class="headerlink" href="#building-sdks" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="prerequisites">
-<h2>2.3.1. Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.1. Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="../common_tasks/index.html#common-tasks-docker-install"><span class="std std-ref">Docker Installation</span></a></li>
 </ul>
 </div>
 <div class="section" id="building-a-sdk-toolchain">
-<h2>2.3.2. Building a SDK (toolchain)<a class="headerlink" href="#building-a-sdk-toolchain" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.2. Building a SDK (toolchain)<a class="headerlink" href="#building-a-sdk-toolchain" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>A Toolchain is always build for a specific image and contains all libraries installed in that image</li>
 <li>First build the toolchain with Yocto:</li>
@@ -193,7 +219,7 @@
 </ul>
 <tty-player controls poster=npt:28.5 cols=72 rows=30 src="../_static/yocto-build-sdk.ttyrec"></tty-player></div>
 <div class="section" id="installing-an-sdk-to-a-developer-host">
-<span id="yocto-building-sdks-install"></span><h2>2.3.3. Installing an SDK to a developer host<a class="headerlink" href="#installing-an-sdk-to-a-developer-host" title="Permalink to this headline">¶</a></h2>
+<span id="yocto-building-sdks-install"></span><h2>2.4.3. Installing an SDK to a developer host<a class="headerlink" href="#installing-an-sdk-to-a-developer-host" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Copy the generated debian-package for the SDK you want to a developer host and install it with <code class="docutils literal"><span class="pre">dpkg</span></code> (e.g. the enterprise-sdk):</li>
 </ul>
@@ -205,15 +231,18 @@
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../crossdev/index.html" class="btn btn-neutral float-right" title="3. (Cross-) Application Development" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../crossdev/index.html" class="btn btn-neutral float-right" title="3. (Cross-) Application Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="building_images.html" class="btn btn-neutral" title="2.2. Building Images" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="building_images.html" class="btn btn-neutral" title="2.3. Building Images" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -247,7 +276,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
