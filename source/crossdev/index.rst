@@ -10,3 +10,4 @@
    build
    rt_hints
    remote_debug_clion
+   profiling
