@@ -1,17 +1,16 @@
-SCA Embedded Linux Buildsystem
-==============================
+.. cip-interface documentation master file, created by
+   sphinx-quickstart on Fri Jun 09 11:58:31 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-Contents:
+Welcome to cip-interface's documentation!
+=========================================
 
 .. toctree::
-    :maxdepth: 2
-    :numbered:
+   :maxdepth: 2
+   :caption: Contents:
 
-    target/index
-    yocto/index
-    crossdev/index
-    integration-tests/index
-    common_tasks/index
+
 
 Indices and tables
 ==================
